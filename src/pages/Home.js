@@ -1,8 +1,10 @@
+import Box from '@mui/material/Box';
+
 function Home() {
     return(
-        <div>
-            <h2>Home</h2>
-        </div>
+        <Box>
+            <h3>Home</h3>
+        </Box>
     )
 }
 

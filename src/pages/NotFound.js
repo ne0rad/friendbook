@@ -1,9 +1,11 @@
+import Box from '@mui/material/Box';
+
 function NotFound() {
     return(
-        <div>
+        <Box>
             <h2>404</h2>
             <h3>Page Not Found</h3>
-        </div>
+        </Box>
     )
 }
 

@@ -1,8 +1,10 @@
+import Box from '@mui/material/Box';
+
 function About() {
     return(
-        <div>
+        <Box>
             <h2>About</h2>
-        </div>
+        </Box>
     )
 }
 
