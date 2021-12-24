@@ -1,6 +1,8 @@
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import Button from '@mui/material/Button';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from "@mui/material/FormControlLabel";
 import Box from '@mui/material/Box';
 import { useState } from "react";
 
@@ -8,7 +10,8 @@ function Login() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState(false);
+    const [usernameError, setUsernameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
 
     function handleEnter(e) {
         if (e.key === 'Enter') {
@@ -17,16 +20,23 @@ function Login() {
         }
     }
     function handleSubmit() {
-        if(username.length < 1 || password.length < 1) {
-            setError(true);
-        } else {
-            console.log('All good');
+        let hasErrors = false;
+        if (username.length < 1) {
+            setUsernameError(true);
+            hasErrors = true;
+        }
+        if(password.length < 1) {
+            setPasswordError(true);
+            hasErrors = true;
+        }
+        if(!hasErrors) {
+            console.log("All good!");
         }
     }
 
     return (
         <Box>
-            <h3>LOGIN</h3>
+            <h2>LOGIN</h2>
             <br />
             <FormControl variant="standard">
                 <TextField
@@ -37,7 +47,9 @@ function Login() {
                     size="small"
                     onChange={(e) => setUsername(e.target.value)}
                     onKeyPress={handleEnter}
-                    error={error}
+                    onFocus={() => setUsernameError(false)}
+                    error={usernameError}
+                    required
                 />
                 <br />
                 <TextField
@@ -49,10 +61,14 @@ function Login() {
                     size="small"
                     onChange={(e) => setPassword(e.target.value)}
                     onKeyPress={handleEnter}
-                    onFocus={() => setError(false)}
-                    error={error}
+                    onFocus={() => setPasswordError(false)}
+                    error={passwordError}
+                    required
                 />
                 <br />
+                <div align="center">
+                    <FormControlLabel control={<Checkbox />} label="Remember Me" />
+                </div>
                 <br />
                 <Button variant="contained" type="submit" onClick={handleSubmit}>LOGIN</Button>
             </FormControl>

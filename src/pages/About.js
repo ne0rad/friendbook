@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 
 function About() {
-    return(
+    return (
         <Box>
             <h2>About</h2>
         </Box>
