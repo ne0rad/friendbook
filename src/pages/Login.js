@@ -1,9 +1,4 @@
-import TextField from "@mui/material/TextField";
-import FormControl from "@mui/material/FormControl";
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Box from '@mui/material/Box';
+import { TextField, FormControl, Button, Checkbox, FormControlLabel, Box } from "@mui/material";
 import { useState } from "react";
 
 function Login() {
@@ -19,6 +14,7 @@ function Login() {
             handleSubmit();
         }
     }
+    
     function handleSubmit() {
         let hasErrors = false;
         if (username.length < 1) {
