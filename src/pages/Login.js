@@ -1,5 +1,6 @@
-import { TextField, FormControl, Button, Checkbox, FormControlLabel, Box } from "@mui/material";
+import { TextField, FormControl, Button, Checkbox, FormControlLabel, Paper, Box } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function Login() {
 
@@ -14,60 +15,65 @@ function Login() {
             handleSubmit();
         }
     }
-    
+
     function handleSubmit() {
         let hasErrors = false;
         if (username.length < 1) {
             setUsernameError(true);
             hasErrors = true;
         }
-        if(password.length < 1) {
+        if (password.length < 1) {
             setPasswordError(true);
             hasErrors = true;
         }
-        if(!hasErrors) {
+        if (!hasErrors) {
             console.log("All good!");
         }
     }
 
     return (
-        <Box>
-            <h2>LOGIN</h2>
-            <br />
-            <FormControl variant="standard">
-                <TextField
-                    id="username"
-                    label="Username"
-                    value={username}
-                    variant="outlined"
-                    size="small"
-                    onChange={(e) => setUsername(e.target.value)}
-                    onKeyPress={handleEnter}
-                    onFocus={() => setUsernameError(false)}
-                    error={usernameError}
-                    required
-                />
+        <Box maxWidth="sm">
+            <Paper elevation={5} sx={{ mt: 3, p: 2 }}>
+                <h2>LOGIN</h2>
                 <br />
-                <TextField
-                    id="password"
-                    label="Password"
-                    value={password}
-                    variant="outlined"
-                    type="password"
-                    size="small"
-                    onChange={(e) => setPassword(e.target.value)}
-                    onKeyPress={handleEnter}
-                    onFocus={() => setPasswordError(false)}
-                    error={passwordError}
-                    required
-                />
+                <FormControl variant="standard">
+                    <TextField
+                        id="username"
+                        label="Username"
+                        value={username}
+                        variant="outlined"
+                        size="small"
+                        onChange={(e) => setUsername(e.target.value)}
+                        onKeyPress={handleEnter}
+                        onFocus={() => setUsernameError(false)}
+                        error={usernameError}
+                        required
+                    />
+                    <br />
+                    <TextField
+                        id="password"
+                        label="Password"
+                        value={password}
+                        variant="outlined"
+                        type="password"
+                        size="small"
+                        onChange={(e) => setPassword(e.target.value)}
+                        onKeyPress={handleEnter}
+                        onFocus={() => setPasswordError(false)}
+                        error={passwordError}
+                        required
+                    />
+                    <br />
+                    <div align="center">
+                        <FormControlLabel control={<Checkbox />} label="Remember Me" />
+                    </div>
+                    <br />
+                    <Button variant="contained" type="submit" onClick={handleSubmit}>LOGIN</Button>
+                </FormControl>
                 <br />
-                <div align="center">
-                    <FormControlLabel control={<Checkbox />} label="Remember Me" />
-                </div>
                 <br />
-                <Button variant="contained" type="submit" onClick={handleSubmit}>LOGIN</Button>
-            </FormControl>
+                <p>Don't have an account? <Link to="/signup">Signup Here</Link></p>
+            </Paper>
         </Box>
     )
 }
