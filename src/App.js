@@ -1,10 +1,10 @@
+import { Container } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
-import Container from "@mui/material/Container";
 import Signup from "./pages/Signup";
 
 function App() {
