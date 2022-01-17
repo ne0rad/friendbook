@@ -6,10 +6,21 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  typography: {
+    allVariants: {
+      fontFamily: "'Ubuntu', sans-serif"
+    },
+  },
+});
 
 function App() {
+
+
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Navbar />
       <Container maxWidth="lg" mt="1rem" align="center">
         <Routes>
@@ -20,7 +31,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Container>
-    </>
+    </ThemeProvider>
   );
 }
 
