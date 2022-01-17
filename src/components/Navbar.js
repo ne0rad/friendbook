@@ -19,8 +19,18 @@ function NavBar() {
                     >
                         FriendBook
                     </Typography>
-                    <Button color="inherit" variant="standard" sx={{ mx: 1 }} onClick={() => navigate("/login")}>Login</Button>
-                    <Button color="inherit" variant="standard" sx={{ mx: 1 }} onClick={() => navigate("/signup")}>Signup</Button>
+                    <Button
+                        color="inherit"
+                        variant="outlined"
+                        sx={{ mx: 1 }}
+                        onClick={() => navigate("/login")}
+                    >Login</Button>
+                    <Button
+                        color="inherit"
+                        variant="outlined"
+                        sx={{ mx: 1 }}
+                        onClick={() => navigate("/signup")}
+                    >Signup</Button>
                 </Toolbar>
             </AppBar>
         </Box>
