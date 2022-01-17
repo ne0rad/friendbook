@@ -1,10 +1,12 @@
-import Box from '@mui/material/Box';
+import { Box, Paper, Typography } from '@mui/material';
 
 function NotFound() {
     return (
-        <Box>
-            <h1>404</h1>
-            <h2>Page Not Found</h2>
+        <Box maxWidth="sm">
+            <Paper elevation={3} sx={{ my: 4, p: 4 }}>
+                <Typography variant='h1'>404</Typography>
+                <Typography variant='h4'>Page Not Found</Typography>
+            </Paper>
         </Box>
     )
 }
