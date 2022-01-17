@@ -1,4 +1,4 @@
-import { TextField, FormControl, Button, Checkbox, FormControlLabel, Paper, Box } from "@mui/material";
+import { TextField, FormControl, Button, Checkbox, FormControlLabel, Paper, Box, Divider, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,6 @@ function Login() {
 
     function handleEnter(e) {
         if (e.key === 'Enter') {
-            console.log('Enter was pressed!');
             handleSubmit();
         }
     }
@@ -19,22 +18,24 @@ function Login() {
     function handleSubmit() {
         let hasErrors = false;
         if (username.length < 1) {
-            setUsernameError(true);
+            setUsernameError("Username can't be empty.");
             hasErrors = true;
         }
         if (password.length < 1) {
-            setPasswordError(true);
+            setPasswordError("Password can't be empty.");
             hasErrors = true;
         }
         if (!hasErrors) {
-            console.log("All good!");
+            console.log("All good! Let's login.");
         }
     }
 
     return (
         <Box maxWidth="sm">
-            <Paper elevation={5} sx={{ mt: 3, p: 2 }}>
-                <h2>LOGIN</h2>
+            <Paper elevation={3} sx={{ my: 4, p: 2 }}>
+                <Typography variant="h3" fontSize="24px" fontWeight="500">LOGIN</Typography>
+                <br/>
+                <Divider />
                 <br />
                 <FormControl variant="standard">
                     <TextField
@@ -45,8 +46,9 @@ function Login() {
                         size="small"
                         onChange={(e) => setUsername(e.target.value)}
                         onKeyPress={handleEnter}
-                        onFocus={() => setUsernameError(false)}
-                        error={usernameError}
+                        onKeyDown={() => setUsernameError(false)}
+                        error={usernameError ? true : false}
+                        helperText={usernameError}
                         required
                     />
                     <br />
@@ -59,8 +61,9 @@ function Login() {
                         size="small"
                         onChange={(e) => setPassword(e.target.value)}
                         onKeyPress={handleEnter}
-                        onFocus={() => setPasswordError(false)}
-                        error={passwordError}
+                        onKeyDown={() => setPasswordError(false)}
+                        error={passwordError ? true : false}
+                        helperText={passwordError}
                         required
                     />
                     <br />
@@ -72,7 +75,13 @@ function Login() {
                 </FormControl>
                 <br />
                 <br />
-                <p>Don't have an account? <Link to="/signup">Signup Here</Link></p>
+                <Divider />
+                <br />
+                <Typography>
+                    Don't have an account?
+                    <br />
+                    <Link to="/signup">Signup Here</Link>
+                </Typography>
             </Paper>
         </Box>
     )
