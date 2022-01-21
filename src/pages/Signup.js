@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Button, FormControl, TextField, Box, Paper, Divider, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URI } from "../config/config";
 
 function Signup() {
+
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -23,36 +25,41 @@ function Signup() {
         }
     }
 
-    function handleSubmit() {
-        let errors = false;
+    function checkInputs() {
+        let valid = true;
         if (username.length < 1) {
-            errors = true;
+            valid = false;
             setUsernameError("Username can't be empty.");
         }
         if (password.length < 1) {
-            errors = true;
+            valid = false;
             setPasswordError("Password can't be empty.");
         }
         if (password2 !== password) {
-            errors = true;
+            valid = false;
             setPassword2Error("Passwords must match.");
         }
-        if (!errors) {
+        return valid;
+    }
+
+    function handleSubmit() {
+        if (checkInputs()) {
             setLoading(true)
             axios.post(API_URI + "/users/createUser", { username: username, password: password })
                 .then((res) => {
+                    setLoading(false);
                     if (res.status === 200) {
                         console.log('User Created!');
-                    } else {
-                        console.log('Error creating user');
+                        navigate("/login");
                     }
                 })
                 .catch((err) => {
-                    if (err.response.data === 'username') {
-                        setUsernameError('Username already taken.');
+                    if (err.response.data.error === 'username') {
+                        setUsernameError(err.response.data.message);
                     }
-                })
-                .finally(() => {
+                    if (err.response.data.error === 'password') {
+                        setPasswordError(err.response.data.message);
+                    }
                     setLoading(false);
                 })
         }
@@ -66,6 +73,7 @@ function Signup() {
                 <Divider />
                 <br />
                 <FormControl variant="outlined" size="sm">
+
                     <TextField
                         id="username"
                         label="Username"
@@ -108,7 +116,15 @@ function Signup() {
                     />
                     <br />
                     <br />
-                    <Button variant="contained" onClick={handleSubmit} disabled={loading}>Signup</Button>
+                    <Button
+                        variant="contained"
+                        onClick={handleSubmit}
+                        disabled={loading}
+                        type="submit"
+                    >
+                        Signup
+                    </Button>
+
                 </FormControl>
                 <br />
                 <br />

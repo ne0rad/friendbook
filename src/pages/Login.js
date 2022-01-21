@@ -1,13 +1,20 @@
 import { TextField, FormControl, Button, Checkbox, FormControlLabel, Paper, Box, Divider, Typography } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { API_URI } from "../config/config";
 
-function Login() {
+function Login({ login }) {
+
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
     const [usernameError, setUsernameError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
+
+    const [loading, setLoading] = useState(false);
 
     function handleEnter(e) {
         if (e.key === 'Enter') {
@@ -15,18 +22,39 @@ function Login() {
         }
     }
 
-    function handleSubmit() {
-        let hasErrors = false;
+    function checkInputs() {
+        let valid = true;
         if (username.length < 1) {
             setUsernameError("Username can't be empty.");
-            hasErrors = true;
+            valid = false;
         }
         if (password.length < 1) {
             setPasswordError("Password can't be empty.");
-            hasErrors = true;
+            valid = false;
         }
-        if (!hasErrors) {
-            console.log("All good! Let's login.");
+        return valid;
+    }
+
+    function handleSubmit() {
+        if (checkInputs()) {
+            setLoading(true)
+            axios.post(API_URI + "/users/loginUser", { username: username, password: password })
+                .then((res) => {
+                    setLoading(false);
+                    if (res.status === 200) {
+                        login(username, "testToken")
+                        navigate("/");
+                    }
+                })
+                .catch((err) => {
+                    if (err.response.data.error === 'username') {
+                        setUsernameError(err.response.data.message);
+                    }
+                    if (err.response.data.error === 'password') {
+                        setPasswordError(err.response.data.message);
+                    }
+                    setLoading(false);
+                })
         }
     }
 
@@ -34,7 +62,7 @@ function Login() {
         <Box maxWidth="sm">
             <Paper elevation={3} sx={{ my: 4, p: 2 }}>
                 <Typography variant="h3" fontSize="24px" fontWeight="500">LOGIN</Typography>
-                <br/>
+                <br />
                 <Divider />
                 <br />
                 <FormControl variant="standard">
@@ -71,7 +99,7 @@ function Login() {
                         <FormControlLabel control={<Checkbox />} label="Remember Me" />
                     </div>
                     <br />
-                    <Button variant="contained" type="submit" onClick={handleSubmit}>LOGIN</Button>
+                    <Button variant="contained" type="submit" onClick={handleSubmit} disabled={loading}>LOGIN</Button>
                 </FormControl>
                 <br />
                 <br />
