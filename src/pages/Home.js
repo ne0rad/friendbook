@@ -11,32 +11,38 @@ function Home() {
                 <br />
                 <Divider />
                 <br />
+
                 <Typography variant="h3" fontSize="20px" fontWeight="400">Technologies Used:</Typography>
+
                 <List>
+
                     <ListItem disablePadding>
                         <ListItemButton component="a" href="https://reactjs.org" target="_blank">
                             <ListItemIcon>
                                 <DoubleArrowIcon />
                             </ListItemIcon>
-                            <ListItemText primary="ReactJS" secondary="User interface frontend framework"/>
+                            <ListItemText primary="ReactJS" secondary="User interface frontend framework" />
                         </ListItemButton>
                     </ListItem>
+
                     <ListItem disablePadding>
                         <ListItemButton component="a" href="https://expressjs.com" target="_blank">
                             <ListItemIcon>
                                 <DoubleArrowIcon />
                             </ListItemIcon>
-                            <ListItemText primary="NodeJS (Express)" secondary="Backend API server"/>
+                            <ListItemText primary="NodeJS (Express)" secondary="Backend API server" />
                         </ListItemButton>
                     </ListItem>
+
                     <ListItem disablePadding>
                         <ListItemButton component="a" href="https://www.mongodb.com" target="_blank">
                             <ListItemIcon>
                                 <DoubleArrowIcon />
                             </ListItemIcon>
-                            <ListItemText primary="MongoDB" secondary="Relational Database"/>
+                            <ListItemText primary="MongoDB" secondary="Relational Database" />
                         </ListItemButton>
                     </ListItem>
+
                     <ListItem disablePadding>
                         <ListItemButton component="a" href="https://socket.io" target="_blank">
                             <ListItemIcon>
@@ -45,36 +51,44 @@ function Home() {
                             <ListItemText primary="Socket.io" secondary="2-way communication with backend." />
                         </ListItemButton>
                     </ListItem>
+
                     <ListItem disablePadding>
                         <ListItemButton component="a" href="https://mui.com" target="_blank">
                             <ListItemIcon>
                                 <DoubleArrowIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Material UI" secondary="UI Design Framework"/>
+                            <ListItemText primary="Material UI" secondary="UI Design Framework" />
                         </ListItemButton>
                     </ListItem>
+
                 </List>
+
                 <Divider />
                 <br />
                 <Typography variant="h3" fontSize="20px" fontWeight="400">GitHub Links:</Typography>
+
                 <List>
+
                     <ListItem disablePadding>
                         <ListItemButton component="a" href="https://github.com/ne0rad/friendbook" target="_blank">
                             <ListItemIcon>
                                 <GitHubIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Project Source" secondary="Source code of the project"/>
+                            <ListItemText primary="Project Source" secondary="Source code of the project" />
                         </ListItemButton>
                     </ListItem>
+
                     <ListItem disablePadding>
                         <ListItemButton component="a" href="https://github.com/ne0rad" target="_blank">
                             <ListItemIcon>
                                 <GitHubIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Profile (ne0rad)" secondary="My GitHub profile"/>
+                            <ListItemText primary="Profile (ne0rad)" secondary="My GitHub profile" />
                         </ListItemButton>
                     </ListItem>
+
                 </List>
+
                 <Divider />
                 <br />
                 <Typography>Made by ne0rad</Typography>
