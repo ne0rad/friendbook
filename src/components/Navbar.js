@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, Typography, Button, IconButton } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Button, IconButton, Tooltip, Zoom } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
@@ -20,22 +20,26 @@ function NavBar({ user }) {
                     {user ? (
                         // LOGGED IN
                         <>
-                            <IconButton
-                                aria-label="Home"
-                                size="large"
-                                sx={{ color: 'white' }}
-                                onClick={() => navigate('/')}
-                            >
-                                <HomeIcon />
-                            </IconButton>
-                            <IconButton
-                                aria-label="Profile"
-                                size="large"
-                                sx={{ color: 'white' }}
-                                onClick={() => navigate('/profile')}
-                            >
-                                <AccountCircleIcon />
-                            </IconButton>
+                            <Tooltip title="Home" TransitionComponent={Zoom} enterDelay={500} arrow>
+                                <IconButton
+                                    aria-label="Home"
+                                    size="large"
+                                    sx={{ color: 'white' }}
+                                    onClick={() => navigate('/')}
+                                >
+                                    <HomeIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Profile" TransitionComponent={Zoom} enterDelay={500} arrow>
+                                <IconButton
+                                    aria-label="Profile"
+                                    size="large"
+                                    sx={{ color: 'white' }}
+                                    onClick={() => navigate('/profile')}
+                                >
+                                    <AccountCircleIcon />
+                                </IconButton>
+                            </Tooltip>
                         </>
                     ) :
                         // NOT LOGGED IN
