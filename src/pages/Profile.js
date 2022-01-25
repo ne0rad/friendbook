@@ -1,16 +1,19 @@
-import { Grid, Paper, Typography } from "@mui/material";
+import { Button, Grid, Paper, Skeleton, Typography } from "@mui/material";
 
 function Profile({ user }) {
 
     return (
-        <Grid container spacing={2} md={10} sx={{ my: 1 }} flexWrap="wrap">
-            <Grid item xs={8}>
+        <Grid container spacing={1} sx={{ my: 1 }} justifyContent="center">
+            <Grid xs={8} textAlign="left" item>
                 <Paper elevation={3} sx={{ p: 2 }}>
-                <Typography variant="overline" fontSize={22}>Profile</Typography>
+                    <Skeleton variant="rectangular" width={210} height={210} />
+                    <hr />
                     <Typography>Username: <b>{user.username}</b></Typography>
+                    <hr />
+                    <Button variant="outlined">Edit Profile</Button>
                 </Paper>
             </Grid>
-            <Grid item xs={4}>
+            <Grid xs={3} item>
                 <Paper elevation={3} sx={{ p: 2 }}>
                     <Typography variant="overline" fontSize={22}>Friends</Typography>
                     <Typography>ne0rad</Typography>
