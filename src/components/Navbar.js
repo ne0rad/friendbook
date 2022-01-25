@@ -20,7 +20,7 @@ function NavBar({ user }) {
                     {user ? (
                         // LOGGED IN
                         <>
-                            <Tooltip title="Home" TransitionComponent={Zoom} enterDelay={500} arrow>
+                            <Tooltip title="Home" TransitionComponent={Zoom} arrow>
                                 <IconButton
                                     aria-label="Home"
                                     size="large"
@@ -30,7 +30,7 @@ function NavBar({ user }) {
                                     <HomeIcon />
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title="Profile" TransitionComponent={Zoom} enterDelay={500} arrow>
+                            <Tooltip title="Profile" TransitionComponent={Zoom} arrow>
                                 <IconButton
                                     aria-label="Profile"
                                     size="large"
