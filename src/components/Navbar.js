@@ -2,6 +2,8 @@ import { AppBar, Box, Toolbar, Typography, Button, IconButton, Tooltip, Zoom } f
 import { useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import LoginIcon from '@mui/icons-material/Login';
 
 function NavBar({ user }) {
     const navigate = useNavigate();
@@ -47,14 +49,14 @@ function NavBar({ user }) {
                             <>
                                 <Button
                                     color="inherit"
-                                    variant="outlined"
+                                    startIcon={<LoginIcon />}
                                     sx={{ mx: 1 }}
                                     onClick={() => navigate("/login")}>
                                     Login
                                 </Button>
                                 <Button
                                     color="inherit"
-                                    variant="outlined"
+                                    startIcon={<HowToRegIcon />}
                                     sx={{ mx: 1 }}
                                     onClick={() => navigate("/signup")}>
                                     Signup
