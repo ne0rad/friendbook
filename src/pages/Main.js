@@ -1,5 +1,6 @@
 import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import Post from "../components/Post";
 
 function Main({ user }) {
     return (
@@ -8,6 +9,7 @@ function Main({ user }) {
                 <Typography variant="h3">Main Page</Typography>
                 <Typography>Hello, {user.username}</Typography>
             </Paper>
+            <Post />
         </Box>
     )
 }
