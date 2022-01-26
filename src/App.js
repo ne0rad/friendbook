@@ -9,7 +9,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
-import Profile from "./pages/Profile";
+import Me from "./pages/Me";
 
 
 
@@ -31,7 +31,7 @@ function App() {
             // LOGGED IN
             (<>
               <Route path="/" element={<Main user={user}/>} />
-              <Route path="/profile" element={<Profile user={user}/>} />
+              <Route path="/me" element={<Me user={user}/>} />
             </>
             ) :
             // NOT LOGGED IN
