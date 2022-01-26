@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Container } from "@mui/material";
+import {  Container } from "@mui/material";
 import { Routes, Route } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
 import { THEME } from './config/config';
@@ -24,7 +24,7 @@ function App() {
   return (
     <ThemeProvider theme={THEME}>
       <Navbar user={user} />
-      <Container maxWidth="lg" mt="1rem" align="center">
+      <Container maxWidth="lg" mt="1rem" p="0" align="center">
         <Routes>
 
           {user ?
