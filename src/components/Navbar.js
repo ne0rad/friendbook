@@ -32,12 +32,12 @@ function NavBar({ user }) {
                                     <HomeIcon />
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title="Profile" TransitionComponent={Zoom} arrow>
+                            <Tooltip title="My Profile" TransitionComponent={Zoom} arrow>
                                 <IconButton
-                                    aria-label="Profile"
+                                    aria-label="My Profile"
                                     size="large"
                                     sx={{ color: 'white' }}
-                                    onClick={() => navigate('/profile')}
+                                    onClick={() => navigate('/me')}
                                 >
                                     <AccountCircleIcon />
                                 </IconButton>
