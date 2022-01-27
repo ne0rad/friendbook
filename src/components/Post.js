@@ -6,22 +6,23 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { useState } from "react";
 
-function Posts({ posts }) {
+function Post({ post }) {
 
     const [expanded, setExpanded] = useState(false);
+    const [liked, setLiked] = useState(false);
 
     function handleExpandClick() {
         setExpanded(!expanded);
     };
 
+    function handleLikeClick() {
+        setLiked(!liked);
+    }
+
     return (
         <Card elevation={3}>
             <CardHeader
-                avatar={
-                    <Avatar aria-label="qwe">
-                        Q
-                    </Avatar>
-                }
+                avatar={<Avatar aria-label="qwe">Q</Avatar>}
                 action={
                     <IconButton aria-label="settings">
                         <MoreVertIcon />
@@ -36,31 +37,30 @@ function Posts({ posts }) {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="like">
-                    <FavoriteIcon />
+                <IconButton aria-label="like" onClick={handleLikeClick}>
+                    <FavoriteIcon htmlColor={liked ? "tomato" : "primary"} />
                 </IconButton>
                 <IconButton aria-label="share">
                     <ShareIcon />
                 </IconButton>
                 <Button
-                    expand={expanded}
+                    expand={expanded.toString()}
                     onClick={handleExpandClick}
                     aria-expanded={expanded}
                     aria-label="show more"
                     sx={{ marginLeft: 'auto' }}
                     endIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 >
-                    Comments
+                    Comments (3)
                 </Button>
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <hr />
                 <CardContent sx={{ display: "flex", justifyContent: "flex-start" }}>
-                    <Skeleton variant="circular" width={40} height={40} sx={{ mr: 3, minWidth: 40 }} />
-                    <br />
+                    <Skeleton variant="circular" width={40} height={40} sx={{ mr: 3, mt: 1, minWidth: 40 }} />
                     <div style={{ width: "100%" }}>
-                        <Skeleton variant="text" />
-                        <Skeleton variant="text" />
-                        <Skeleton variant="text" />
+                        <Skeleton variant="text" height={30} />
+                        <Skeleton variant="text" height={30} />
                     </div>
                 </CardContent>
             </Collapse>
@@ -68,4 +68,4 @@ function Posts({ posts }) {
     )
 }
 
-export default Posts;
+export default Post;
