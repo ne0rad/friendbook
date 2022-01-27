@@ -54,6 +54,11 @@ function Signup() {
                     }
                 })
                 .catch((err) => {
+                    if(!err.response) {
+                        setUsernameError("Couldn't connect to server");
+                        setLoading(false);
+                        return;
+                    }
                     if (err.response.data.error === 'username') {
                         setUsernameError(err.response.data.message);
                     }
