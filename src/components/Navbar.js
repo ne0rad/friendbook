@@ -4,9 +4,13 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useContext } from 'react';
+import { TokenContext } from '../config/context';
 
-function NavBar({ user }) {
+function NavBar({ logout }) {
     const navigate = useNavigate();
+    const token = useContext(TokenContext);
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -19,7 +23,7 @@ function NavBar({ user }) {
                         FriendBook
                     </Typography>
                     <Typography sx={{ flexGrow: 1 }} />
-                    {user ? (
+                    {token ? (
                         // LOGGED IN
                         <>
                             <Tooltip title="Home" TransitionComponent={Zoom} arrow>
@@ -40,6 +44,16 @@ function NavBar({ user }) {
                                     onClick={() => navigate('/me')}
                                 >
                                     <AccountCircleIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Logout" TransitionComponent={Zoom} arrow>
+                                <IconButton
+                                    aria-label="Logout"
+                                    size="large"
+                                    sx={{ color: 'white' }}
+                                    onClick={() => logout()}
+                                >
+                                    <LogoutIcon />
                                 </IconButton>
                             </Tooltip>
                         </>
