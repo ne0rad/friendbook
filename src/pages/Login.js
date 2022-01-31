@@ -38,11 +38,11 @@ function Login({ login }) {
     function handleSubmit() {
         if (checkInputs()) {
             setLoading(true)
-            axios.post(API_URI + "/users/loginUser", { username: username, password: password })
+            axios.post(API_URI + "/auth/login", { username: username, password: password })
                 .then((res) => {
                     setLoading(false);
                     if (res.status === 200) {
-                        login(username, "testToken")
+                        login(res.data.token);
                         navigate("/");
                     }
                 })
