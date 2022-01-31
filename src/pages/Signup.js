@@ -45,7 +45,7 @@ function Signup() {
     function handleSubmit() {
         if (checkInputs()) {
             setLoading(true)
-            axios.post(API_URI + "/users/createUser", { username: username, password: password })
+            axios.post(API_URI + "/auth/create", { username: username, password: password })
                 .then((res) => {
                     setLoading(false);
                     if (res.status === 200) {
