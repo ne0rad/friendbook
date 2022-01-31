@@ -50,7 +50,6 @@ function App() {
         } else {
           setToken(reqToken);
           setUser(res.data);
-          console.log(res);
           localStorage.setItem('token', reqToken);
         }
         setLoading(false);
