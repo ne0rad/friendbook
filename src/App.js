@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
 import { THEME } from './config/config';
 import { TokenContext } from "./config/context";
@@ -21,6 +21,8 @@ function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate();
+
   // Check if user is logged in on page load and set token and user accordingly
   useEffect(() => {
     const storageToken = localStorage.getItem('token');
@@ -37,9 +39,9 @@ function App() {
   // Login user and set token and user
   function login(reqToken) {
     setLoading(true);
-    axios.get(API_URI + "/user/get_user", {
+    axios.get(API_URI + "/user/get_my_info", {
       headers: {
-        Authorization: `Bearer ${reqToken}`
+        authorization: reqToken
       }
     })
       .then(res => {
@@ -59,6 +61,8 @@ function App() {
         console.log(err);
         localStorage.removeItem('token');
         setLoading(false);
+        setToken(null);
+        setUser(null);
       });
   }
 
@@ -67,22 +71,23 @@ function App() {
     setToken(null);
     setUser(null);
     localStorage.removeItem('token');
+    navigate('/');
   }
 
   return (
     <ThemeProvider theme={THEME}>
       <TokenContext.Provider value={token}>
-        {loading ? <Loading /> : (
-          <>
-            <Navbar logout={logout} />
-            <Container maxWidth="lg" mt="1rem" p="0" align="center">
+        <Navbar logout={logout} loading={loading} />
+        <Container maxWidth="lg" mt="1rem" p="0" align="center">
+          {loading ? <Loading /> : (
+            <>
               <Routes>
 
                 {token ?
                   // LOGGED IN
                   (<>
                     <Route path="/" element={<Main user={user} />} />
-                    <Route path="/me" element={<Me />} />
+                    <Route path="/me" element={<Me user={user} />} />
                   </>
                   ) :
                   // NOT LOGGED IN
@@ -96,9 +101,9 @@ function App() {
 
                 <Route path="*" element={<NotFound />} />
               </Routes>
-            </Container>
-          </>
-        )}
+            </>
+          )}
+        </Container>
       </TokenContext.Provider>
     </ThemeProvider>
   );
