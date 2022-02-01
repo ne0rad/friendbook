@@ -52,10 +52,10 @@ function Login({ login }) {
                         setLoading(false);
                         return;
                     }
-                    if (err.response.data.error === 'username') {
+                    if (err.response.data.loc === 'username') {
                         setUsernameError(err.response.data.message);
                     }
-                    if (err.response.data.error === 'password') {
+                    if (err.response.data.loc === 'password') {
                         setPasswordError(err.response.data.message);
                     }
                     setLoading(false);
