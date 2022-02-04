@@ -14,6 +14,8 @@ import NotFound from "./pages/NotFound";
 import Signup from "./pages/Signup";
 import Me from "./pages/Me";
 import Loading from "./pages/Loading";
+import Settings from "./pages/Settings";
+import Logout from "./pages/Logout";
 
 function App() {
 
@@ -68,16 +70,16 @@ function App() {
 
   // Logout user and set token and user to null
   function logout() {
+    localStorage.removeItem('token');
     setToken(null);
     setUser(null);
-    localStorage.removeItem('token');
     navigate('/');
   }
 
   return (
     <ThemeProvider theme={THEME}>
       <TokenContext.Provider value={token}>
-        <Navbar logout={logout} loading={loading} />
+        <Navbar loading={loading} />
         <Container maxWidth="lg" mt="1rem" p="0" align="center">
           {loading ? <Loading /> : (
             <>
@@ -88,6 +90,8 @@ function App() {
                   (<>
                     <Route path="/" element={<Main user={user} />} />
                     <Route path="/me" element={<Me user={user} />} />
+                    <Route path="/settings" element={<Settings user={user} />} />
+                    <Route path="/logout" element={<Logout logout={logout}/>} />
                   </>
                   ) :
                   // NOT LOGGED IN
