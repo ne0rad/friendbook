@@ -1,14 +1,13 @@
 import { AppBar, Box, Toolbar, Typography, Button, IconButton, Tooltip, Zoom } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import HomeIcon from '@mui/icons-material/Home';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
+import NavMenu from './NavMenu';
 import { useContext } from 'react';
 import { TokenContext } from '../config/context';
 
-function NavBar({ logout, loading }) {
+function NavBar({ loading }) {
     const navigate = useNavigate();
     const token = useContext(TokenContext);
 
@@ -38,26 +37,7 @@ function NavBar({ logout, loading }) {
                                             <HomeIcon />
                                         </IconButton>
                                     </Tooltip>
-                                    <Tooltip title="My Profile" TransitionComponent={Zoom} arrow>
-                                        <IconButton
-                                            aria-label="My Profile"
-                                            size="large"
-                                            sx={{ color: 'white' }}
-                                            onClick={() => navigate('/me')}
-                                        >
-                                            <AccountCircleIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Logout" TransitionComponent={Zoom} arrow>
-                                        <IconButton
-                                            aria-label="Logout"
-                                            size="large"
-                                            sx={{ color: 'white' }}
-                                            onClick={() => logout()}
-                                        >
-                                            <LogoutIcon />
-                                        </IconButton>
-                                    </Tooltip>
+                                    <NavMenu />
                                 </>
                             ) :
                                 // NOT LOGGED IN
