@@ -23,7 +23,7 @@ function NavMenu() {
     };
 
     return (
-        <div>
+        <>
             <IconButton
                 id="basic-button"
                 aria-controls={open ? 'basic-menu' : undefined}
@@ -85,7 +85,7 @@ function NavMenu() {
                 </MenuItem>
 
             </Menu>
-        </div>
+        </>
     );
 }
 
