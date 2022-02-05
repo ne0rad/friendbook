@@ -11,7 +11,7 @@ function Logout({ logout }) {
                 <hr />
                 <Typography sx={{ my: 2 }}>Are you sure you want to log out?</Typography>
                 <Button onClick={() => logout()} variant="contained" size="large" sx={{ mx: 2 }}>Yes</Button>
-                <Button onClick={() => navigate('/')} variant="contained" size="large" sx={{ mx: 2 }}>No</Button>
+                <Button onClick={() => navigate(-1)} variant="contained" size="large" sx={{ mx: 2 }}>No</Button>
             </Paper>
         </Box>
     )
