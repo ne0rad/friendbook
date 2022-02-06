@@ -20,7 +20,7 @@ function Post({ post }) {
     }
 
     return (
-        <Card elevation={3}>
+        <Card elevation={3} sx={{my: 2}}>
             <CardHeader
                 avatar={<Avatar aria-label="qwe">Q</Avatar>}
                 action={

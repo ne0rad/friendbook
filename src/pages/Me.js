@@ -7,7 +7,7 @@ function Profile({ user }) {
 
     return (
         <>
-            <Grid container spacing={1} sx={{ my: 1 }} justifyContent="center">
+            <Grid container spacing={1}>
 
                 <Grid xs={12} md={8} item>
                     <Details user={user}/>
@@ -19,7 +19,7 @@ function Profile({ user }) {
 
             </Grid>
 
-            <Grid container spacing={1} sx={{ mt: 1, mb: 3 }}>
+            <Grid container spacing={1}>
                 <Grid xs={12} md={8} item>
                     <Post />
                 </Grid>

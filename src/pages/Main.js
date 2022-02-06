@@ -10,7 +10,7 @@ function Main({ user }) {
 
     return (
         <Box maxWidth="sm">
-            <Paper elevation={3} sx={{ my: 4, p: 2 }}>
+            <Paper elevation={3} sx={{ p: 2 }}>
                 <Typography variant="h3">Main Page</Typography>
                 <Typography>Username: {user.username}</Typography>
             </Paper>

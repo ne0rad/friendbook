@@ -5,7 +5,7 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 function Home() {
     return (
         <Box maxWidth="sm">
-            <Paper elevation={3} sx={{ my: 4, p: 2 }}>
+            <Paper elevation={3} sx={{ p: 2 }}>
                 <Typography variant="h1" fontSize="35px" fontWeight="600">FriendBook</Typography>
                 <Typography variant="h2" fontSize="20px" fontWeight="300">Social Network</Typography>
                 <br />

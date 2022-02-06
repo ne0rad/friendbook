@@ -72,7 +72,7 @@ function Signup() {
 
     return (
         <Box maxWidth="sm">
-            <Paper elevation={3} sx={{ my: 4, p: 2 }}>
+            <Paper elevation={3} sx={{ p: 2 }}>
                 <Typography variant="h3" fontSize="24px" fontWeight="500">SIGNUP</Typography>
                 <br />
                 <Divider />
