@@ -1,4 +1,4 @@
-import { AppBar, Box, Toolbar, Typography, Button, IconButton, Tooltip, Zoom, Badge } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Button, IconButton, Badge } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import HomeIcon from '@mui/icons-material/Home';
@@ -9,8 +9,15 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import MessageIcon from '@mui/icons-material/Message';
 import { useContext } from 'react';
 import { TokenContext } from '../config/context';
+import { useState } from 'react';
+import NotificationsDrawer from './NotificationsDrawer';
+import MessagesDrawer from './MessagesDrawer';
 
 function NavBar({ loading }) {
+
+    const [openNotifications, setOpenNotifications] = useState(false);
+    const [openMessages, setOpenMessages] = useState(false);
+
     const navigate = useNavigate();
     const token = useContext(TokenContext);
 
@@ -23,9 +30,17 @@ function NavBar({ loading }) {
         },
     }));
 
+    function toggleNotifications() {
+        setOpenNotifications(!openNotifications);
+    }
+
+    function toggleMessages() {
+        setOpenMessages(!openMessages);
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="fixed">
                 <Toolbar variant='dense'>
                     <Typography
                         variant="h6"
@@ -39,41 +54,39 @@ function NavBar({ loading }) {
                             {token ? (
                                 // LOGGED IN
                                 <>
-                                    <Tooltip title="Home" TransitionComponent={Zoom} arrow>
-                                        <IconButton
-                                            aria-label="Home"
-                                            size="large"
-                                            sx={{ color: 'white' }}
-                                            onClick={() => navigate('/')}
-                                        >
-                                            <HomeIcon />
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Messages" TransitionComponent={Zoom} arrow>
-                                        <IconButton
-                                            aria-label="Messages"
-                                            size="large"
-                                            sx={{ color: 'white' }}
-                                        >
-                                            <StyledBadge badgeContent={11} color="primary">
-                                                <MessageIcon />
-                                            </StyledBadge>
-                                        </IconButton>
-                                    </Tooltip>
-                                    <Tooltip title="Notifications" TransitionComponent={Zoom} arrow>
+                                    <IconButton
+                                        aria-label="Home"
+                                        size="large"
+                                        sx={{ color: 'white' }}
+                                        onClick={() => navigate('/')}
+                                    >
+                                        <HomeIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        aria-label="Messages"
+                                        size="large"
+                                        sx={{ color: 'white' }}
+                                        onClick={() => toggleMessages()}
+                                    >
+                                        <StyledBadge badgeContent={11} color="primary">
+                                            <MessageIcon />
+                                        </StyledBadge>
+                                    </IconButton>
 
-                                        <IconButton
-                                            aria-label="Notifications"
-                                            size="large"
-                                            sx={{ color: 'white' }}
-                                        >
-                                            <StyledBadge badgeContent={2} color="primary">
-                                                <NotificationsIcon />
-                                            </StyledBadge>
-                                        </IconButton>
-                                    </Tooltip>
+                                    <IconButton
+                                        aria-label="Notifications"
+                                        size="large"
+                                        sx={{ color: 'white' }}
+                                        onClick={toggleNotifications}
+                                    >
+                                        <StyledBadge badgeContent={2} color="primary">
+                                            <NotificationsIcon />
+                                        </StyledBadge>
+                                    </IconButton>
 
                                     <NavMenu />
+                                    <NotificationsDrawer openNotifications={openNotifications} toggleNotifications={toggleNotifications} />
+                                    <MessagesDrawer openMessages={openMessages} toggleMessages={toggleMessages} />
                                 </>
                             ) :
                                 // NOT LOGGED IN
