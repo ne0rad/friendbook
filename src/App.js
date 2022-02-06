@@ -80,7 +80,7 @@ function App() {
     <ThemeProvider theme={THEME}>
       <TokenContext.Provider value={token}>
         <Navbar loading={loading} />
-        <Container maxWidth="lg" mt="1rem" p="0" align="center">
+        <Container maxWidth="lg" sx={{mt: 8, p: 1}} align="center">
           {loading ? <Loading /> : (
             <>
               <Routes>
