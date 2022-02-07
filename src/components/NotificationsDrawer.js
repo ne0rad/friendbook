@@ -1,15 +1,15 @@
 import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import { useNavigate } from "react-router-dom";
 
 function NotificationsDrawer({ openNotifications, toggleNotifications }) {
 
     const navigate = useNavigate();
 
-    const list = (anchor) => (
+    const list = () => (
         <Box
-            sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+            sx={{ width: 300 }}
             role="presentation"
             onClick={() => toggleNotifications()}
             onKeyDown={() => toggleNotifications()}
@@ -19,11 +19,11 @@ function NotificationsDrawer({ openNotifications, toggleNotifications }) {
                     <ListItemText sx={{textAlign: 'center'}} primary="Notifications" />
                 </ListItem>
                 {['Max', 'qwe', 'admin'].map((text, index) => (
-                    <ListItem button key={text} divider onClick={() => navigate('/notifications')}>
+                    <ListItem button key={text} divider onClick={() => navigate('/notifications')} sx={{px: 1, py: 0}}>
                         <ListItemIcon>
-                            {index % 2 === 0 ? <NotificationsIcon /> : <NotificationsNoneIcon />}
+                            {index % 2 === 0 ? <NotificationsActiveIcon /> : <NotificationsNoneIcon />}
                         </ListItemIcon>
-                        <ListItemText primary={text} secondary="mentioned you in his comment."/>
+                        <ListItemText primary={text} secondary="commented on your post"/>
                     </ListItem>
                 ))}
             </List>
