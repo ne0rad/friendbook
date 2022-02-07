@@ -1,12 +1,12 @@
 import { AppBar, Box, Toolbar, Typography, Button, IconButton, Badge } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import HomeIcon from '@mui/icons-material/Home';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import LoginIcon from '@mui/icons-material/Login';
 import NavMenu from './NavMenu';
+import HomeIcon from '@mui/icons-material/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import MessageIcon from '@mui/icons-material/Message';
+import EmailIcon from '@mui/icons-material/Email';
 import { useContext } from 'react';
 import { TokenContext } from '../config/context';
 import { useState } from 'react';
@@ -68,8 +68,8 @@ function NavBar({ loading }) {
                                         sx={{ color: 'white' }}
                                         onClick={() => toggleMessages()}
                                     >
-                                        <StyledBadge badgeContent={11} color="primary">
-                                            <MessageIcon />
+                                        <StyledBadge badgeContent={2} color="primary">
+                                            <EmailIcon />
                                         </StyledBadge>
                                     </IconButton>
 
@@ -79,11 +79,11 @@ function NavBar({ loading }) {
                                         sx={{ color: 'white' }}
                                         onClick={toggleNotifications}
                                     >
-                                        <StyledBadge badgeContent={2} color="primary">
+                                        <StyledBadge badgeContent={3} color="primary">
                                             <NotificationsIcon />
                                         </StyledBadge>
                                     </IconButton>
-
+                                    <Box sx={{mx: 1}}/>
                                     <NavMenu />
                                     <NotificationsDrawer openNotifications={openNotifications} toggleNotifications={toggleNotifications} />
                                     <MessagesDrawer openMessages={openMessages} toggleMessages={toggleMessages} />
