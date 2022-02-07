@@ -2,7 +2,7 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from 'react';
-import { IconButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Divider, IconButton, ListItemIcon, ListItemText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import SettingsIcon from '@mui/icons-material/Settings';
@@ -73,7 +73,7 @@ function NavMenu() {
                     <ListItemText>Settings</ListItemText>
                 </MenuItem>
 
-                <hr />
+                <Divider />
                 <MenuItem onClick={() => {
                     handleClose();
                     navigate('/logout');
