@@ -41,11 +41,8 @@ function App() {
   // Login user and set token and user
   function login(reqToken) {
     setLoading(true);
-    axios.get(API_URI + "/user/get_my_info", {
-      headers: {
-        authorization: reqToken
-      }
-    })
+    axios.get(API_URI + "/user/get_my_info", { headers: { Authorization: reqToken } })
+
       .then(res => {
         if (res.status !== 200) {
           localStorage.removeItem('token');
@@ -56,19 +53,20 @@ function App() {
           setUser(res.data);
           localStorage.setItem('token', reqToken);
         }
-        setLoading(false);
       })
 
       .catch(err => {
         console.log(err);
         localStorage.removeItem('token');
-        setLoading(false);
         setToken(null);
         setUser(null);
-      });
+      })
+      
+      .then(() => {
+        setLoading(false);
+      })
   }
 
-  // Logout user and set token and user to null
   function logout() {
     localStorage.removeItem('token');
     setToken(null);
@@ -80,7 +78,7 @@ function App() {
     <ThemeProvider theme={THEME}>
       <TokenContext.Provider value={token}>
         <Navbar loading={loading} />
-        <Container maxWidth="lg" sx={{mt: 8, p: 1}} align="center">
+        <Container maxWidth="lg" sx={{ mt: 8, p: 1 }} align="center">
           {loading ? <Loading /> : (
             <>
               <Routes>
@@ -91,7 +89,7 @@ function App() {
                     <Route path="/" element={<Main user={user} />} />
                     <Route path="/me" element={<Me user={user} />} />
                     <Route path="/settings" element={<Settings user={user} />} />
-                    <Route path="/logout" element={<Logout logout={logout}/>} />
+                    <Route path="/logout" element={<Logout logout={logout} />} />
                   </>
                   ) :
                   // NOT LOGGED IN
