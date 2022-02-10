@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URI } from "../config/config";
 
-function Signup() {
+function Signup({ login }) {
 
     const navigate = useNavigate();
 
@@ -50,11 +50,12 @@ function Signup() {
                     setLoading(false);
                     if (res.status === 200) {
                         console.log('User Created!');
-                        navigate("/login");
+                        login(res.data.token);
+                        navigate("/");
                     }
                 })
                 .catch((err) => {
-                    if(!err.response) {
+                    if (!err.response) {
                         setUsernameError("Couldn't connect to server");
                         setLoading(false);
                         return;
