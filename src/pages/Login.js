@@ -1,4 +1,4 @@
-import { TextField, FormControl, Button, Checkbox, FormControlLabel, Paper, Box, Divider, Typography } from "@mui/material";
+import { TextField, FormControl, Button, Paper, Box, Divider, Typography } from "@mui/material";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -100,9 +100,6 @@ function Login({ login }) {
                         required
                     />
                     <br />
-                    <div align="center">
-                        <FormControlLabel control={<Checkbox />} label="Remember Me" />
-                    </div>
                     <br />
                     <Button variant="contained" type="submit" onClick={handleSubmit} disabled={loading}>LOGIN</Button>
                 </FormControl>
