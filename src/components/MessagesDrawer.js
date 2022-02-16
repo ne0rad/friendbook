@@ -1,8 +1,32 @@
-import { Box, Drawer, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { Box, Button, ButtonGroup, Drawer, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
+import axios from 'axios';
+import { API_URI } from '../config/config';
+import { TokenContext } from "../config/context";
+import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function MessagesDrawer({ openMessages, toggleMessages }) {
+
+    const token = useContext(TokenContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        axios.get(`${API_URI}/user/notifications`, {
+            headers: {
+                authorization: token
+            }
+        })
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, [token]);
+
+
 
     const list = () => (
         <Box
@@ -12,15 +36,20 @@ function MessagesDrawer({ openMessages, toggleMessages }) {
             onKeyDown={() => toggleMessages()}
         >
             <List>
-                <ListItem divider>
-                    <ListItemText sx={{textAlign: 'center'}} primary="Messages" />
+
+                <ListItem sx={{mb: 1}}>
+                    <ButtonGroup variant="outlined" aria-label="message functions" sx={{alignItems: 'center'}}>
+                        <Button>New Message</Button>
+                        <Button onClick={() => navigate('/messages')}>All Messages</Button>
+                    </ButtonGroup>
                 </ListItem>
+
                 {['qwe', 'admin'].map((text, index) => (
-                    <ListItem button key={text} divider sx={{px: 1, py: 0}}>
+                    <ListItem button key={text} divider sx={{ px: 1, py: 0 }}>
                         <ListItemIcon >
                             {index === 1 ? <DraftsOutlinedIcon /> : <MarkEmailUnreadIcon />}
                         </ListItemIcon>
-                        <ListItemText primary={text} secondary="Hey, I just wanted to let you kno..."/>
+                        <ListItemText primary={text} secondary="Hey, I just wanted to let you kno..." />
                     </ListItem>
                 ))}
             </List>
