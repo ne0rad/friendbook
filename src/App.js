@@ -16,6 +16,7 @@ import Me from "./pages/Me";
 import Loading from "./pages/Loading";
 import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
+import Messages from "./pages/Messages";
 
 function App() {
 
@@ -89,6 +90,7 @@ function App() {
                     <Route path="/" element={<Main user={user} />} />
                     <Route path="/me" element={<Me user={user} />} />
                     <Route path="/settings" element={<Settings user={user} />} />
+                    <Route path="/messages" element={<Messages user={user} />} />
                     <Route path="/logout" element={<Logout logout={logout} />} />
                   </>
                   ) :
