@@ -17,6 +17,7 @@ import Loading from "./pages/Loading";
 import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
 import Messages from "./pages/Messages";
+import Chat from "./pages/Chat";
 
 function App() {
 
@@ -79,7 +80,7 @@ function App() {
     <ThemeProvider theme={THEME}>
       <TokenContext.Provider value={token}>
         <Navbar loading={loading} />
-        <Container maxWidth="lg" sx={{ mt: 8, p: 1 }} align="center">
+        <Container maxWidth="lg" sx={{ mt: 8, mb: 2, p: 1 }} align="center">
           {loading ? <Loading /> : (
             <>
               <Routes>
@@ -91,6 +92,7 @@ function App() {
                     <Route path="/me" element={<Me user={user} />} />
                     <Route path="/settings" element={<Settings user={user} />} />
                     <Route path="/messages" element={<Messages user={user} />} />
+                    <Route path="/chat/:chatroom" element={<Chat user={user} />} />
                     <Route path="/logout" element={<Logout logout={logout} />} />
                   </>
                   ) :
