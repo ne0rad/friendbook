@@ -1,14 +1,30 @@
 import { Box, Button, List, ListItem, ListItemIcon, ListItemText, Paper, TextField } from "@mui/material";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { TokenContext } from "../config/context";
+import { newChat } from "../api/chat";
 
 function Messages({ user }) {
 
     const [newMessageInput, setNewMessageInput] = useState('');
+    const [newMessageError, setNewMessageError] = useState(false);
 
     const navigate = useNavigate();
+    const token = useContext(TokenContext);
+
+    function startNewChat(e) {
+        e.preventDefault();
+        const response = newChat(token, [newMessageInput]);
+        if (response) {
+            setNewMessageInput('');
+            setNewMessageError(false);
+            navigate("/chat/" + response.chatID);
+        } else {
+            setNewMessageError(true);
+        }
+    }
 
     return (
         <Box maxWidth="sm">
@@ -19,15 +35,22 @@ function Messages({ user }) {
                     {
                         // NEW MESSAGE
                     }
-                    <ListItem sx={{ justifyContent: "center", alignItems: "center", mb: 1 }}>
-                        <TextField
-                            placeholder="Recepient's username"
-                            variant="standard" size="small"
-                            sx={{ mr: 1 }}
-                            value={newMessageInput}
-                            onChange={(e) => setNewMessageInput(e.target.value)}
-                        />
-                        <Button variant="outlined">New message</Button>
+                    <ListItem sx={{mb: 1}}>
+                        <Box 
+                        component="form"
+                        sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
+                        onSubmit={(e) => startNewChat(e)}>
+                            <TextField
+                                placeholder="Recepient's username"
+                                variant="standard" size="small"
+                                sx={{ mr: 1, flex: 1 }}
+                                value={newMessageInput}
+                                onChange={(e) => setNewMessageInput(e.target.value)}
+                                onKeyDown={() => setNewMessageError(false)}
+                                error={newMessageError}
+                            />
+                            <Button type="submit" variant="contained" size="small">New Chat</Button>
+                        </Box>
                     </ListItem>
 
                     {
