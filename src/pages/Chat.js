@@ -77,23 +77,7 @@ function Chat({ user }) {
         if (messageInput.length > 0) {
             testMessages.push({ author: 'qwe', message: messageInput });
             setScrollToBottomSwitch(!scrollToBottomSwitch);
-
-            axios.post(API_URI + "/messages/send_message",
-                { chatroom: chatroom, message: messageInput },
-                { headers: { Authorization: token } })
-                .then(res => {
-                    if (res.status === 200) {
-                        setMessages([...messages, res.data.message]);
-                    } else {
-                        setError(true);
-                    }
-                })
-                .catch(err => {
-                    setError(true);
-                })
-                .then(() => {
-                    setMessageInput('');
-                });
+            setMessageInput('');
         }
     }
 
@@ -104,7 +88,7 @@ function Chat({ user }) {
                     <Box maxWidth="sm">
                         <Paper elevation={3} sx={{ p: 2, minHeight: "80vh" }} >
 
-                            <Typography>Members: {user.username}, {chatroom}</Typography>
+                            <Typography>Chat with {chatroom}</Typography>
 
                             <MessageBox user={user} messages={testMessages} scrollToBottomSwitch={scrollToBottomSwitch} />
 
@@ -117,12 +101,13 @@ function Chat({ user }) {
                                 }}>
                                 <TextField
                                     placeholder="Your message"
-                                    variant="outlined" size="small"
+                                    variant="standard" size="small"
                                     sx={{ mr: 1, flex: 1 }}
                                     value={messageInput}
                                     onChange={(e) => setMessageInput(e.target.value)}
                                     autoFocus={true}
                                     error={error}
+                                    onKeyPress={() => { error && setError(false)}}
                                 />
                                 <Button type="submit" variant="contained" size="small">Send</Button>
                             </Box>
