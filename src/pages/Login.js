@@ -1,12 +1,12 @@
 import { TextField, FormControl, Button, Paper, Box, Divider, Typography } from "@mui/material";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URI } from "../config/config";
+import { SocketContext } from '../config/socket';
 
 function Login({ login }) {
 
     const navigate = useNavigate();
+    const socket = useContext(SocketContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -15,12 +15,6 @@ function Login({ login }) {
     const [passwordError, setPasswordError] = useState(false);
 
     const [loading, setLoading] = useState(false);
-
-    function handleEnter(e) {
-        if (e.key === 'Enter') {
-            handleSubmit();
-        }
-    }
 
     function checkInputs() {
         let valid = true;
@@ -37,29 +31,16 @@ function Login({ login }) {
 
     function handleSubmit() {
         if (checkInputs()) {
-            setLoading(true)
-            axios.post(API_URI + "/auth/login", { username: username, password: password })
-                .then((res) => {
-                    setLoading(false);
-                    if (res.status === 200) {
-                        login(res.data.token);
-                        navigate("/");
-                    }
-                })
-                .catch((err) => {
-                    if(!err.response) {
-                        setUsernameError("Couldn't connect to server");
-                        setLoading(false);
-                        return;
-                    }
-                    if (err.response.data.loc === 'username') {
-                        setUsernameError(err.response.data.message);
-                    }
-                    if (err.response.data.loc === 'password') {
-                        setPasswordError(err.response.data.message);
-                    }
-                    setLoading(false);
-                })
+            setLoading(true);
+            socket.emit('login', { username: username, password: password }, (err, res) => {
+                setLoading(false);
+                if (err) {
+                    console.log(err);
+                    setUsernameError(err);
+                } else if (res) {
+                    login(res);
+                }
+            });
         }
     }
 
@@ -70,7 +51,10 @@ function Login({ login }) {
                 <br />
                 <Divider />
                 <br />
-                <FormControl variant="standard">
+                <FormControl variant="standard" component="form" onSubmit={(e) => {
+                    e.preventDefault();
+                    handleSubmit();
+                }}>
                     <TextField
                         id="username"
                         label="Username"
@@ -78,7 +62,6 @@ function Login({ login }) {
                         variant="outlined"
                         size="small"
                         onChange={(e) => setUsername(e.target.value)}
-                        onKeyPress={handleEnter}
                         onKeyDown={() => setUsernameError(false)}
                         error={usernameError ? true : false}
                         helperText={usernameError}
@@ -93,7 +76,6 @@ function Login({ login }) {
                         type="password"
                         size="small"
                         onChange={(e) => setPassword(e.target.value)}
-                        onKeyPress={handleEnter}
                         onKeyDown={() => setPasswordError(false)}
                         error={passwordError ? true : false}
                         helperText={passwordError}

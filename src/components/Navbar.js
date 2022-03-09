@@ -7,8 +7,6 @@ import NavMenu from './NavMenu';
 import HomeIcon from '@mui/icons-material/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import EmailIcon from '@mui/icons-material/Email';
-import { useContext } from 'react';
-import { TokenContext } from '../config/context';
 import { useState } from 'react';
 import NotificationsDrawer from './NotificationsDrawer';
 import MessagesDrawer from './MessagesDrawer';
@@ -19,7 +17,6 @@ function NavBar({ loading }) {
     const [openMessages, setOpenMessages] = useState(false);
 
     const navigate = useNavigate();
-    const token = useContext(TokenContext);
 
     const StyledBadge = styled(Badge)(() => ({
         '& .MuiBadge-badge': {
@@ -51,7 +48,7 @@ function NavBar({ loading }) {
                     <Typography sx={{ flexGrow: 1 }} />
                     {!loading && (
                         <>
-                            {token ? (
+                            {false ? ( // TODO: remove this
                                 // LOGGED IN
                                 <>
                                     <IconButton

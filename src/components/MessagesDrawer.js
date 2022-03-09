@@ -1,32 +1,12 @@
 import { Box, Button, ButtonGroup, Drawer, List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
-import axios from 'axios';
-import { API_URI } from '../config/config';
-import { TokenContext } from "../config/context";
-import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function MessagesDrawer({ openMessages, toggleMessages }) {
 
-    const token = useContext(TokenContext);
+   // const token = useContext(TokenContext);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        axios.get(`${API_URI}/user/notifications`, {
-            headers: {
-                authorization: token
-            }
-        })
-            .then(res => {
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, [token]);
-
-
 
     const list = () => (
         <Box

@@ -3,9 +3,7 @@ import { Container } from "@mui/material";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
 import { THEME } from './config/config';
-import { TokenContext } from "./config/context";
-import { API_URI } from "./config/config";
-import axios from "axios";
+import { SocketContext, socket } from "./config/socket";
 import Navbar from "./components/Navbar";
 import Main from "./pages/Main";
 import Home from "./pages/Home";
@@ -31,7 +29,15 @@ function App() {
   useEffect(() => {
     const storageToken = localStorage.getItem('token');
     if (storageToken) {
-      login(storageToken);
+      socket.emit('login', storageToken, (err, res) => {
+        if (err) {
+          console.log(err);
+        } else if (res) {
+          setToken(storageToken);
+          setUser(res);
+        }
+        setLoading(false);
+      });
     } else {
       setLoading(false);
     }
@@ -40,33 +46,11 @@ function App() {
     }
   }, []);
 
-  // Login user and set token and user
-  function login(reqToken) {
-    setLoading(true);
-    axios.get(API_URI + "/user/get_my_info", { headers: { Authorization: reqToken } })
-
-      .then(res => {
-        if (res.status !== 200) {
-          localStorage.removeItem('token');
-          setToken(null);
-          setUser(null);
-        } else {
-          setToken(reqToken);
-          setUser(res.data);
-          localStorage.setItem('token', reqToken);
-        }
-      })
-
-      .catch(err => {
-        console.log(err);
-        localStorage.removeItem('token');
-        setToken(null);
-        setUser(null);
-      })
-      
-      .then(() => {
-        setLoading(false);
-      })
+  function login(res) {
+    setToken(res.token);
+    setUser(res.username);
+    localStorage.setItem('token', res.token);
+    navigate('/');
   }
 
   function logout() {
@@ -78,7 +62,7 @@ function App() {
 
   return (
     <ThemeProvider theme={THEME}>
-      <TokenContext.Provider value={token}>
+      <SocketContext.Provider value={socket}>
         <Navbar loading={loading} />
         <Container maxWidth="lg" sx={{ mt: 8, mb: 2, p: 1 }} align="center">
           {loading ? <Loading /> : (
@@ -110,7 +94,7 @@ function App() {
             </>
           )}
         </Container>
-      </TokenContext.Provider>
+      </SocketContext.Provider>
     </ThemeProvider>
   );
 }

@@ -18,7 +18,7 @@ function MessageBox({ user, messages, scrollToBottomSwitch }) {
         <Paper
             elevation={0}
             sx={{
-                backgroundColor: "#f2fbff",
+                backgroundColor: "#f2f2f2",
                 height: "70vh",
                 my: 2,
                 p: 1,

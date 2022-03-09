@@ -1,10 +1,7 @@
 import { Button, Paper, TextField, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { useContext, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import Loading from '../pages/Loading';
-import axios from 'axios';
-import { API_URI } from '../config/config';
-import { TokenContext } from "../config/context";
 import { useNavigate, useParams } from "react-router-dom";
 import MessageBox from "../components/Chat/MessageBox";
 
@@ -37,7 +34,6 @@ function Chat({ user }) {
 
     const navigate = useNavigate();
     const params = useParams();
-    const token = useContext(TokenContext);
 
 
     useEffect(() => {
@@ -45,32 +41,13 @@ function Chat({ user }) {
             navigate('/messages');
 
         } else {
-
             setChatroom(params.chatroom);
-            setLoading(true);
-            axios.post(API_URI + "/messages/chatroom_messages",
-                { chatroom: params.chatroom },
-                { headers: { Authorization: token } })
-                .then(res => {
-                    if (res.status === 200) {
-                        setMessages(res.data.messages);
-                    } else {
-                        setError(true);
-                    }
-                })
-                .catch(err => {
-                    setError(true);
-                    //navigate('/messages');
-                })
-                .then(() => {
-                    setLoading(false);
-                });
         }
 
         return () => {
             setChatroom(null);
         }
-    }, [params.chatroom, token, navigate]);
+    }, [params.chatroom, navigate]);
 
     function sendMessage(e) {
         e.preventDefault();

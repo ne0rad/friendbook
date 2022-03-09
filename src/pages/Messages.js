@@ -1,10 +1,8 @@
 import { Box, Button, List, ListItem, ListItemIcon, ListItemText, Paper, TextField } from "@mui/material";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { TokenContext } from "../config/context";
-import { newChat } from "../api/chat";
 
 function Messages({ user }) {
 
@@ -12,18 +10,10 @@ function Messages({ user }) {
     const [newMessageError, setNewMessageError] = useState(false);
 
     const navigate = useNavigate();
-    const token = useContext(TokenContext);
 
     function startNewChat(e) {
         e.preventDefault();
-        const response = newChat(token, [newMessageInput]);
-        if (response) {
-            setNewMessageInput('');
-            setNewMessageError(false);
-            navigate("/chat/" + response.chatID);
-        } else {
-            setNewMessageError(true);
-        }
+        console.log('start new chat');
     }
 
     return (

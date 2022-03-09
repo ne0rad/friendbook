@@ -1,9 +1,9 @@
 import { createTheme } from "@mui/material";
 
-// API SERVER URI ADRESS
-export const API_URI = "http://localhost:4000";
+// SOCKET SERVER URI ADRESS
+export const SOCKET_URI = "http://localhost:4000";
 
-// Various setting for Material UI
+// Various theme settings for Material UI
 export const THEME = createTheme({
     typography: {
       allVariants: {

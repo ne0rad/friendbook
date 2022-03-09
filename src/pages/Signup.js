@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { Button, FormControl, TextField, Box, Paper, Divider, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { API_URI } from "../config/config";
 
 function Signup({ login }) {
 
@@ -44,30 +42,7 @@ function Signup({ login }) {
 
     function handleSubmit() {
         if (checkInputs()) {
-            setLoading(true)
-            axios.post(API_URI + "/auth/create", { username: username, password: password })
-                .then((res) => {
-                    setLoading(false);
-                    if (res.status === 200) {
-                        console.log('User Created!');
-                        login(res.data.token);
-                        navigate("/");
-                    }
-                })
-                .catch((err) => {
-                    if (!err.response) {
-                        setUsernameError("Couldn't connect to server");
-                        setLoading(false);
-                        return;
-                    }
-                    if (err.response.data.loc === 'username') {
-                        setUsernameError(err.response.data.message);
-                    }
-                    if (err.response.data.loc === 'password') {
-                        setPasswordError(err.response.data.message);
-                    }
-                    setLoading(false);
-                })
+            console.log('all good');
         }
     }
 
