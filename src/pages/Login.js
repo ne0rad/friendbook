@@ -1,11 +1,10 @@
 import { TextField, FormControl, Button, Paper, Box, Divider, Typography } from "@mui/material";
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SocketContext } from '../config/socket';
 
 function Login({ login }) {
 
-    const navigate = useNavigate();
     const socket = useContext(SocketContext);
 
     const [username, setUsername] = useState('');
@@ -35,7 +34,6 @@ function Login({ login }) {
             socket.emit('login', { username: username, password: password }, (err, res) => {
                 setLoading(false);
                 if (err) {
-                    console.log(err);
                     setUsernameError(err);
                 } else if (res) {
                     login(res);

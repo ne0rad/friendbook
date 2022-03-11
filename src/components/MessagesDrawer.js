@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 
 function MessagesDrawer({ openMessages, toggleMessages }) {
 
-   // const token = useContext(TokenContext);
     const navigate = useNavigate();
 
     const list = () => (
@@ -17,8 +16,8 @@ function MessagesDrawer({ openMessages, toggleMessages }) {
         >
             <List>
 
-                <ListItem sx={{mb: 1}}>
-                    <ButtonGroup variant="outlined" aria-label="message functions" sx={{alignItems: 'center'}}>
+                <ListItem sx={{ mb: 1 }}>
+                    <ButtonGroup variant="outlined" aria-label="message functions" sx={{ alignItems: 'center' }}>
                         <Button>New Message</Button>
                         <Button onClick={() => navigate('/messages')}>All Messages</Button>
                     </ButtonGroup>

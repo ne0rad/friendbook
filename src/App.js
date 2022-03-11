@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container } from "@mui/material";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
 import { THEME } from './config/config';
-import { SocketContext, socket } from "./config/socket";
+import { UserContext } from "./config/user";
 import Navbar from "./components/Navbar";
 import Main from "./pages/Main";
 import Home from "./pages/Home";
@@ -16,67 +16,74 @@ import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
 import Messages from "./pages/Messages";
 import Chat from "./pages/Chat";
+import { SocketContext } from "./config/socket";
 
 function App() {
 
-  const [token, setToken] = useState(null);
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+  const socket = useContext(SocketContext);
 
   // Check if user is logged in on page load and set token and user accordingly
   useEffect(() => {
+    console.log('effect')
     const storageToken = localStorage.getItem('token');
     if (storageToken) {
-      socket.emit('login', storageToken, (err, res) => {
+      setLoading(true);
+      socket.emit('login', { token: storageToken }, (err, res) => {
+        setLoading(false);
         if (err) {
-          console.log(err);
+          console.log(err + " --auto-login");
+          localStorage.removeItem('token');
         } else if (res) {
-          setToken(storageToken);
           setUser(res);
         }
-        setLoading(false);
       });
-    } else {
-      setLoading(false);
     }
     return () => {
-      setToken(null);
+      setUser(null);
     }
-  }, []);
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on('disconnect', () => {
+      socket.connect();
+    });
+  }, [socket]);
 
   function login(res) {
-    setToken(res.token);
-    setUser(res.username);
+    setUser(res);
     localStorage.setItem('token', res.token);
     navigate('/');
   }
 
   function logout() {
     localStorage.removeItem('token');
-    setToken(null);
     setUser(null);
     navigate('/');
+    socket.disconnect();
+    socket.connect();
   }
 
   return (
     <ThemeProvider theme={THEME}>
-      <SocketContext.Provider value={socket}>
+      <UserContext.Provider value={user}>
         <Navbar loading={loading} />
         <Container maxWidth="lg" sx={{ mt: 8, mb: 2, p: 1 }} align="center">
           {loading ? <Loading /> : (
             <>
               <Routes>
 
-                {token ?
+                {user ?
                   // LOGGED IN
                   (<>
-                    <Route path="/" element={<Main user={user} />} />
-                    <Route path="/me" element={<Me user={user} />} />
-                    <Route path="/settings" element={<Settings user={user} />} />
-                    <Route path="/messages" element={<Messages user={user} />} />
-                    <Route path="/chat/:chatroom" element={<Chat user={user} />} />
+                    <Route path="/" element={<Main />} />
+                    <Route path="/me" element={<Me />} />
+                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/messages" element={<Messages />} />
+                    <Route path="/chat/:chatroom" element={<Chat />} />
                     <Route path="/logout" element={<Logout logout={logout} />} />
                   </>
                   ) :
@@ -94,7 +101,7 @@ function App() {
             </>
           )}
         </Container>
-      </SocketContext.Provider>
+      </UserContext.Provider>
     </ThemeProvider>
   );
 }

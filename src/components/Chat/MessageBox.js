@@ -1,10 +1,12 @@
 import { Box, Paper, Typography } from "@mui/material";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { blue, green } from '@mui/material/colors';
+import { UserContext } from "../../config/user";
 
-function MessageBox({ user, messages, scrollToBottomSwitch }) {
+function MessageBox({ messages, scrollToBottomSwitch }) {
 
     const messagesEndRef = useRef(null)
+    const user = useContext(UserContext);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView();

@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './styles.css';
 import App from './App';
+import { SocketContext, socket } from "./config/socket";
+
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
-      <App />
+      <SocketContext.Provider value={socket}>
+        <App />
+      </SocketContext.Provider>
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

@@ -7,11 +7,15 @@ import NavMenu from './NavMenu';
 import HomeIcon from '@mui/icons-material/Home';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import EmailIcon from '@mui/icons-material/Email';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import NotificationsDrawer from './NotificationsDrawer';
 import MessagesDrawer from './MessagesDrawer';
+import { UserContext } from "../config/user";
+
 
 function NavBar({ loading }) {
+
+    const user = useContext(UserContext);
 
     const [openNotifications, setOpenNotifications] = useState(false);
     const [openMessages, setOpenMessages] = useState(false);
@@ -48,7 +52,7 @@ function NavBar({ loading }) {
                     <Typography sx={{ flexGrow: 1 }} />
                     {!loading && (
                         <>
-                            {false ? ( // TODO: remove this
+                            {user ? (
                                 // LOGGED IN
                                 <>
                                     <IconButton
@@ -80,7 +84,7 @@ function NavBar({ loading }) {
                                             <NotificationsIcon />
                                         </StyledBadge>
                                     </IconButton>
-                                    <Box sx={{mx: 1}}/>
+                                    <Box sx={{ mx: 1 }} />
                                     <NavMenu />
                                     <NotificationsDrawer openNotifications={openNotifications} toggleNotifications={toggleNotifications} />
                                     <MessagesDrawer openMessages={openMessages} toggleMessages={toggleMessages} />

@@ -1,12 +1,14 @@
 import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import Post from "../components/Post";
-// import { useContext } from "react";
+import { useContext } from "react";
 // import { TokenContext } from "../config/context";
+import { UserContext } from "../config/user";
 
-function Main({ user }) {
+function Main() {
 
     //const token = useContext(TokenContext);
+    const user = useContext(UserContext);
 
     return (
         <Box maxWidth="sm">

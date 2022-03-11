@@ -1,19 +1,45 @@
 import { Box, Button, List, ListItem, ListItemIcon, ListItemText, Paper, TextField } from "@mui/material";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SocketContext } from '../config/socket';
+import { UserContext } from '../config/user';
 
-function Messages({ user }) {
+function Messages() {
 
     const [newMessageInput, setNewMessageInput] = useState('');
     const [newMessageError, setNewMessageError] = useState(false);
+    const [chatrooms, setChatrooms] = useState([]);
 
     const navigate = useNavigate();
+    const socket = useContext(SocketContext);
+    const user = useContext(UserContext);
+
+    useEffect(() => {
+        socket.emit('get_chats', { user: user._id }, (err, res) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(res);
+                setChatrooms(res.chatrooms);
+            }
+        });
+        return () => {
+            setChatrooms([]);
+        }
+    }, [socket, user]);
 
     function startNewChat(e) {
         e.preventDefault();
-        console.log('start new chat');
+        socket.emit('create_chat', { recipient: newMessageInput }, (err, res) => {
+            if (err) {
+                setNewMessageError(true);
+                console.log(err);
+            } else {
+                navigate('/chat/' + res.chatroom);
+            }
+        });
     }
 
     return (
@@ -25,11 +51,11 @@ function Messages({ user }) {
                     {
                         // NEW MESSAGE
                     }
-                    <ListItem sx={{mb: 1}}>
-                        <Box 
-                        component="form"
-                        sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
-                        onSubmit={(e) => startNewChat(e)}>
+                    <ListItem sx={{ mb: 1 }}>
+                        <Box
+                            component="form"
+                            sx={{ display: "flex", alignItems: "center", justifyContent: "center", width: "100%" }}
+                            onSubmit={(e) => startNewChat(e)}>
                             <TextField
                                 placeholder="Recepient's username"
                                 variant="standard" size="small"
@@ -46,12 +72,18 @@ function Messages({ user }) {
                     {
                         // All conversations
                     }
-                    {['qweee', 'admin', 'lol', 'asd', 'amtg', 'zerex', 'zrex', 'god', 'test1', 'test2', 'test3'].map((text, index) => (
-                        <ListItem button key={text} divider sx={{ px: 1, py: 0 }} onClick={() => navigate(`/chat/123`)}>
+                    {chatrooms.map((chatroom, index) => (
+                        <ListItem button key={chatroom._id} divider sx={{ px: 1, py: 0 }} onClick={() => navigate(`/chat/${chatroom._id}`)}>
                             <ListItemIcon >
                                 {index === 1 ? <DraftsOutlinedIcon /> : <MarkEmailUnreadIcon />}
                             </ListItemIcon>
-                            <ListItemText primary={text} secondary="You: Hey, I just wanted to let you know about the bug I've found. Please get back to me ASAP." />
+                            <ListItemText primary={chatroom.members.map(member => {
+                                if(member._id === user._id) {
+                                    return null;
+                                } else {
+                                    return member.username;
+                                }
+                            })} secondary={chatroom.messages[0].author + ": " + chatroom.messages[0].message} />
                         </ListItem>
                     ))}
 

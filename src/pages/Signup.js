@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, FormControl, TextField, Box, Paper, Divider, Typography } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { SocketContext } from "../config/socket";
 
 function Signup({ login }) {
 
-    const navigate = useNavigate();
+    const socket = useContext(SocketContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -42,7 +43,16 @@ function Signup({ login }) {
 
     function handleSubmit() {
         if (checkInputs()) {
-            console.log('all good');
+            setLoading(true);
+            socket.emit('signup', { username: username, password: password }, (err, res) => {
+                setLoading(false);
+                if (err) {
+                    console.log(err);
+                    setUsernameError(err);
+                } else if (res) {
+                    login(res);
+                }
+            });
         }
     }
 
