@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef } from "react";
 import { blue, green } from '@mui/material/colors';
 import { UserContext } from "../../config/user";
 
-function MessageBox({ messages, scrollToBottomSwitch }) {
+function MessageBox({ messages }) {
 
     const messagesEndRef = useRef(null)
     const user = useContext(UserContext);
@@ -14,7 +14,7 @@ function MessageBox({ messages, scrollToBottomSwitch }) {
 
     useEffect(() => {
         scrollToBottom();
-    }, [scrollToBottomSwitch]);
+    }, [messages]);
 
     return (
         <Paper
