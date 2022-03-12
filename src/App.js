@@ -28,7 +28,6 @@ function App() {
 
   // Check if user is logged in on page load and set token and user accordingly
   useEffect(() => {
-    console.log('effect')
     const storageToken = localStorage.getItem('token');
     if (storageToken) {
       setLoading(true);
@@ -48,10 +47,24 @@ function App() {
   }, [socket]);
 
   useEffect(() => {
-    socket.on('disconnect', () => {
-      socket.connect();
+    socket.on('connect', () => {
+      if (user) {
+        console.log('reconnecting...');
+        socket.emit('login', { token: user.token }, (err, res) => {
+          if (err) {
+            console.log(err + " --auto-login");
+            localStorage.removeItem('token');
+            setUser(null);
+          } else if (res) {
+            setUser(res);
+          }
+        });
+      }
     });
-  }, [socket]);
+    return () => {
+      socket.off('connect');
+    }
+  }, [socket, user]);
 
   function login(res) {
     setUser(res);
