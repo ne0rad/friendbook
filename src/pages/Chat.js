@@ -5,8 +5,9 @@ import Loading from '../pages/Loading';
 import { useNavigate, useParams } from "react-router-dom";
 import MessageBox from "../components/Chat/MessageBox";
 import { SocketContext } from '../config/socket';
+import { UserContext } from '../config/user';
 
-function Chat({ user }) {
+function Chat() {
 
     const [messages, setMessages] = useState([]);
 
@@ -16,11 +17,11 @@ function Chat({ user }) {
     const [error, setError] = useState(false);
     const [chatroom, setChatroom] = useState(null);
     const [chatroomMembers, setChatroomMembers] = useState([]);
-    const [scrollToBottomSwitch, setScrollToBottomSwitch] = useState(false);
 
     const navigate = useNavigate();
     const params = useParams();
     const socket = useContext(SocketContext);
+    const user = useContext(UserContext);
 
 
     useEffect(() => {
@@ -34,11 +35,9 @@ function Chat({ user }) {
                     console.log(err);
                     navigate('/messages');
                 } else {
-                    console.log(res);
                     setChatroom(params.chatroom);
                     setChatroomMembers(res.members);
                     setMessages(res.messages);
-                    setScrollToBottomSwitch(true);
                 }
             });
         }
@@ -49,6 +48,17 @@ function Chat({ user }) {
             setMessages([]);
         }
     }, [params.chatroom, navigate, socket]);
+
+    useEffect(() => {
+        socket.on("message", (res) => {
+            if (res.chatroom === chatroom) {
+                setMessages(messages => [...messages, res.message]);
+            }
+        });
+        return () => {
+            socket.off("message");
+        }
+    }, [socket, messages, chatroom, user]);
 
     function sendMessage(e) {
         e.preventDefault();
@@ -61,9 +71,7 @@ function Chat({ user }) {
                     setError(err);
                     console.log(err);
                 } else {
-                    console.log(res);
                     setMessages([...messages, res.message]);
-                    setScrollToBottomSwitch(!scrollToBottomSwitch);
                 }
             });
         }
@@ -80,7 +88,7 @@ function Chat({ user }) {
                                 [ {chatroomMembers.map(member => member.username).join(', ')} ]
                             </Typography>
 
-                            <MessageBox user={user} messages={messages} scrollToBottomSwitch={scrollToBottomSwitch} />
+                            <MessageBox messages={messages} />
 
 
                             <Box
