@@ -1,7 +1,7 @@
 import { TextField, FormControl, Button, Paper, Box, Divider, Typography } from "@mui/material";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
-import { SocketContext } from '../config/socket';
+import { SocketContext } from '../config/context';
 
 function Login({ login }) {
 
@@ -36,7 +36,7 @@ function Login({ login }) {
                 if (err) {
                     setUsernameError(err);
                 } else if (res) {
-                    login(res);
+                    login(res.token);
                 }
             });
         }

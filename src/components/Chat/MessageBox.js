@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import { useContext, useEffect, useRef } from "react";
 import { blue, green } from '@mui/material/colors';
-import { UserContext } from "../../config/user";
+import { UserContext } from "../../config/context";
 
 function MessageBox({ messages }) {
 
@@ -25,12 +25,16 @@ function MessageBox({ messages }) {
                 my: 2,
                 p: 1,
                 border: "1px solid #e0e0e0",
-                overflow: "scroll"
+                overflowY: "scroll",
+                "&::-webkit-scrollbar": {
+                    display: "none"
+                }
             }}>
 
             {
                 messages.map((message, index) => {
                     const isMe = message.author === user.username;
+                    const author = isMe ? "You" : message.author;
                     return (
                         <Box
                             key={index}
@@ -43,10 +47,10 @@ function MessageBox({ messages }) {
                                     width: "fit-content",
                                     maxWidth: "80%",
                                     wordBreak: "break-all",
-                                    backgroundColor: isMe ? blue[100] : green[100],
+                                    backgroundColor: isMe ? blue[100] : green[100]
                                 }}
                             >
-                                {isMe ? 'You' : message.author}: {message.message}
+                                <b>{author}:</b> {message.message}
                             </Typography>
                         </Box>
                     )

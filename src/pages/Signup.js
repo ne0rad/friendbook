@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { Button, FormControl, TextField, Box, Paper, Divider, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { SocketContext } from "../config/socket";
+import { SocketContext } from "../config/context";
 
 function Signup({ login }) {
 
@@ -50,7 +50,7 @@ function Signup({ login }) {
                     console.log(err);
                     setUsernameError(err);
                 } else if (res) {
-                    login(res);
+                    login(res.token);
                 }
             });
         }

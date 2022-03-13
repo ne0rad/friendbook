@@ -4,15 +4,14 @@ import { useContext, useEffect, useState } from "react";
 import Loading from '../pages/Loading';
 import { useNavigate, useParams } from "react-router-dom";
 import MessageBox from "../components/Chat/MessageBox";
-import { SocketContext } from '../config/socket';
-import { UserContext } from '../config/user';
+import { SocketContext, CacheContext } from '../config/context';
 
 function Chat() {
 
     const [messages, setMessages] = useState([]);
 
     const [messageInput, setMessageInput] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [messageLoading, setMessageLoading] = useState(false);
     const [error, setError] = useState(false);
     const [chatroom, setChatroom] = useState(null);
@@ -21,25 +20,38 @@ function Chat() {
     const navigate = useNavigate();
     const params = useParams();
     const socket = useContext(SocketContext);
-    const user = useContext(UserContext);
+    const cache = useContext(CacheContext);
 
 
     useEffect(() => {
         if (!params.chatroom) {
             navigate('/messages');
         } else {
-            setLoading(true);
+            console.log(socket);
+            if (cache && cache[params.chatroom]) {
+                setChatroom(cache[params.chatroom]);
+                setChatroomMembers(cache[params.chatroom].members);
+                setMessages(cache[params.chatroom].messages);
+                setLoading(false);
+            }
             socket.emit('join_chat', { chatroom: params.chatroom }, (err, res) => {
                 setLoading(false);
                 if (err) {
                     console.log(err);
                     navigate('/messages');
-                } else {
+                } else if (res) {
+                    cache[params.chatroom] = res;
                     setChatroom(params.chatroom);
                     setChatroomMembers(res.members);
                     setMessages(res.messages);
+                    socket.emit('read_chat', { chatroom: res.chatroom }, (err, res) => {
+                        if (err) {
+                            console.log(err);
+                        }
+                    });
                 }
             });
+            socket.off('join_chat');
         }
 
         return () => {
@@ -47,18 +59,18 @@ function Chat() {
             setChatroomMembers([]);
             setMessages([]);
         }
-    }, [params.chatroom, navigate, socket]);
+    }, [params.chatroom, navigate, socket, cache]);
 
     useEffect(() => {
-        socket.on("message", (res) => {
+        socket.on(chatroom, (res) => {
             if (res.chatroom === chatroom) {
-                setMessages(messages => [...messages, res.message]);
+                setMessages([...messages, res.message]);
             }
         });
         return () => {
             socket.off("message");
         }
-    }, [socket, messages, chatroom, user]);
+    }, [socket, messages, chatroom]);
 
     function sendMessage(e) {
         e.preventDefault();

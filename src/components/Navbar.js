@@ -10,7 +10,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import { useState, useContext } from 'react';
 import NotificationsDrawer from './NotificationsDrawer';
 import MessagesDrawer from './MessagesDrawer';
-import { UserContext } from "../config/user";
+import { UserContext } from "../config/context";
 
 
 function NavBar({ loading }) {

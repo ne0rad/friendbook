@@ -1,7 +1,7 @@
 import { Box, Button, List, ListItem, TextField } from "@mui/material";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { SocketContext } from '../../config/socket';
+import { SocketContext } from '../../config/context';
 
 function NewChatForm() {
 
