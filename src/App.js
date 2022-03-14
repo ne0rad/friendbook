@@ -1,9 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
-import { THEME } from './config/config';
-import { SocketContext, UserContext, CacheContext } from "./config/context";
+import { API_URL, THEME } from './config/config';
+import { UserContext, CacheContext } from "./config/context";
 import Navbar from "./components/Navbar";
 import Main from "./pages/Main";
 import Home from "./pages/Home";
@@ -16,6 +16,7 @@ import Settings from "./pages/Settings";
 import Logout from "./pages/Logout";
 import Messages from "./pages/Messages";
 import Chat from "./pages/Chat";
+import axios from "axios";
 
 function App() {
 
@@ -24,53 +25,45 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
-  const socket = useContext(SocketContext);
 
 
+  // Login from local storage
   useEffect(() => {
     const storageToken = localStorage.getItem('token');
+    axios.defaults.baseURL = API_URL;
+
     if (storageToken) {
-      console.log(socket)
-      socket.close();
-      socket.connect();
-      socket.on('connect', () => {
-        console.log('Reconnecting...');
-        socket.emit('login', { token: storageToken }, (err, res) => {
-          setLoading(false);
-          if (err) {
-            console.log("Couldn't reconnect.");
-            localStorage.removeItem('token');
-            setUser(null);
-            clearCache();
-          } else if (res) {
-            console.log('Connection restored.');
+
+      axios.post("/auth/token_login", { token: storageToken })
+        .then((res) => {
+          if (res.status === 200) {
             setUser(res);
+            axios.defaults.headers.common['Authorization'] = res.token;
           }
-        });
-        socket.off('login');
-      });
+        })
+        .catch((err) => {
+          setUser(null);
+          localStorage.removeItem('token');
+          clearCache();
+        })
+        .then(() => {
+          setLoading(false);
+        })
+
     } else {
+      
       setLoading(false);
+      setUser(null);
+      clearCache();
     }
-    return () => {
-      socket.off('connect');
-    }
-  }, [socket]);
+  }, []);
 
-  function login(token) {
-    setLoading(true);
-    socket.emit('login', { token: token }, (err, res) => {
-      setLoading(false);
-      if (err) {
-        console.log(err);
-      } else if (res) {
-        setUser(res);
-        localStorage.setItem('token', res.token);
-        navigate('/');
-      }
-    });
+  function login(res) {
+    setUser(res);
+    axios.defaults.headers.common['Authorization'] = res.token;
+    localStorage.setItem('token', res.token);
+    navigate('/');
   }
-
 
   function clearCache() {
     setCache({});
@@ -81,8 +74,6 @@ function App() {
     setUser(null);
     clearCache();
     navigate('/');
-    socket.disconnect();
-    socket.connect();
   }
 
   return (

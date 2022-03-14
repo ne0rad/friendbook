@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Button, FormControl, TextField, Box, Paper, Divider, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { SocketContext } from "../config/context";
+import axios from "axios";
 
 function Signup({ login }) {
 
@@ -44,15 +45,19 @@ function Signup({ login }) {
     function handleSubmit() {
         if (checkInputs()) {
             setLoading(true);
-            socket.emit('signup', { username: username, password: password }, (err, res) => {
-                setLoading(false);
-                if (err) {
-                    console.log(err);
-                    setUsernameError(err);
-                } else if (res) {
-                    login(res.token);
-                }
-            });
+            axios.post("/auth/signup", { username: username, password: password })
+                .then(res => {
+                    if (res.status === 200) login(res.data);
+                })
+                .catch((err) => {
+                    const error = err.response.data;
+                    if (error.param === "password") {
+                        setPasswordError(error.msg);
+                    } else if (error.param === "username") {
+                        setUsernameError(error.msg);
+                    }
+                    setLoading(false);
+                })
         }
     }
 

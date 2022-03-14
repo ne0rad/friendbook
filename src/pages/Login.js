@@ -1,11 +1,10 @@
 import { TextField, FormControl, Button, Paper, Box, Divider, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { SocketContext } from '../config/context';
+import axios from 'axios';
+
 
 function Login({ login }) {
-
-    const socket = useContext(SocketContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -31,14 +30,19 @@ function Login({ login }) {
     function handleSubmit() {
         if (checkInputs()) {
             setLoading(true);
-            socket.emit('login', { username: username, password: password }, (err, res) => {
-                setLoading(false);
-                if (err) {
-                    setUsernameError(err);
-                } else if (res) {
-                    login(res.token);
-                }
-            });
+            axios.post("/auth/login", { username: username, password: password })
+                .then((res) => {
+                    if (res.status === 200) login(res.data);
+                })
+                .catch((err) => {
+                    const error = err.response.data;
+                    if (error.param === "password") {
+                        setPasswordError(error.msg);
+                    } else if (error.param === "username") {
+                        setUsernameError(error.msg);
+                    }
+                    setLoading(false);
+                })
         }
     }
 

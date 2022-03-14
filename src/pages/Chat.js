@@ -27,65 +27,22 @@ function Chat() {
         if (!params.chatroom) {
             navigate('/messages');
         } else {
-            console.log(socket);
             if (cache && cache[params.chatroom]) {
-                setChatroom(cache[params.chatroom]);
+                console.log(cache);
                 setChatroomMembers(cache[params.chatroom].members);
                 setMessages(cache[params.chatroom].messages);
                 setLoading(false);
             }
-            socket.emit('join_chat', { chatroom: params.chatroom }, (err, res) => {
-                setLoading(false);
-                if (err) {
-                    console.log(err);
-                    navigate('/messages');
-                } else if (res) {
-                    cache[params.chatroom] = res;
-                    setChatroom(params.chatroom);
-                    setChatroomMembers(res.members);
-                    setMessages(res.messages);
-                    socket.emit('read_chat', { chatroom: res.chatroom }, (err, res) => {
-                        if (err) {
-                            console.log(err);
-                        }
-                    });
-                }
-            });
-            socket.off('join_chat');
+            // Axios get chat NEEDS TO BE DONE
         }
+        
+    }, [params.chatroom, cache, navigate]);
 
-        return () => {
-            setChatroom(null);
-            setChatroomMembers([]);
-            setMessages([]);
-        }
-    }, [params.chatroom, navigate, socket, cache]);
-
-    useEffect(() => {
-        socket.on(chatroom, (res) => {
-            if (res.chatroom === chatroom) {
-                setMessages([...messages, res.message]);
-            }
-        });
-        return () => {
-            socket.off("message");
-        }
-    }, [socket, messages, chatroom]);
 
     function sendMessage(e) {
         e.preventDefault();
         if (messageInput.length > 0 && !messageLoading) {
-            setMessageLoading(true);
-            socket.emit('send_message', { chatroom: chatroom, message: messageInput }, (err, res) => {
-                setMessageLoading(false);
-                setMessageInput('');
-                if (err) {
-                    setError(err);
-                    console.log(err);
-                } else {
-                    setMessages([...messages, res.message]);
-                }
-            });
+            // Axios send message NEEDS TO BE DONE
         }
     }
 

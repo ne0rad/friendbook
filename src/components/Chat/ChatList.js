@@ -5,58 +5,60 @@ import { useNavigate } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext, SocketContext, CacheContext } from "../../config/context";
 import Loading from "../../pages/Loading";
+import axios from "axios";
 
 function ChatList() {
 
-    const [chatrooms, setChatrooms] = useState([]);
+    const [chats, setchats] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
     const user = useContext(UserContext);
-    const socket = useContext(SocketContext);
     const cache = useContext(CacheContext);
 
     useEffect(() => {
-        if(cache && cache.chatrooms) {
-            setChatrooms(cache.chatrooms);
+        if(cache && cache.chats) {
+            setchats(cache.chats);
             setLoading(false);
         }
-        socket.emit('get_chats', { user: user._id }, (err, res) => {
-            setLoading(false);
-            if (err) {
+        axios.get("/chat/get_chats")
+            .then(res => {
+                if(res.status === 200) {
+                    setchats(res.data.chats);
+                }
+            })
+            .catch(err => {
                 console.log(err);
-            } else {
-                setChatrooms(res.chatrooms);
-                cache.chatrooms = res.chatrooms;
-            }
-        });
-        socket.off('get_chats');
-    }, [socket, user, cache]);
+            })
+            .then(() =>{
+                setLoading(false);
+            })
+    }, [user, cache]);
 
     return (
         <List>
-            {loading ? <Loading /> : chatrooms.length > 0 ?
-                chatrooms.map(chatroom =>
+            {loading ? <Loading /> : chats.length > 0 ?
+                chats.map(chat =>
                 (
                     <ListItem
                         button
-                        key={chatroom._id}
+                        key={chat._id}
                         divider
                         sx={{ px: 1, py: 0 }}
-                        onClick={() => navigate(`/chat/${chatroom._id}`)}
+                        onClick={() => navigate(`/chat/${chat._id}`)}
                     >
                         <ListItemIcon >
-                            {chatroom.readBy.indexOf(user._id) !== -1 ? <DraftsOutlinedIcon /> : <MarkEmailUnreadIcon />}
+                            {chat.readBy.indexOf(user._id) !== -1 ? <DraftsOutlinedIcon /> : <MarkEmailUnreadIcon />}
                         </ListItemIcon>
-                        <ListItemText primary={chatroom.members.map((member, i) => {
+                        <ListItemText primary={chat.members.map((member, i) => {
                             if (member._id === user._id) {
                                 return null;
                             } else {
                                 return member.username + " ";
                             }
-                        })} secondary={chatroom.lastMessage
+                        })} secondary={chat.lastMessage
                             ?
-                            chatroom.lastMessage.author + ": " + chatroom.lastMessage.message
+                            chat.lastMessage.author + ": " + chat.lastMessage.message
                             :
                             "No messages"} />
                     </ListItem>

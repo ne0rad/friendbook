@@ -1,4 +1,5 @@
 import { Box, Button, List, ListItem, TextField } from "@mui/material";
+import axios from "axios";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { SocketContext } from '../../config/context';
@@ -13,14 +14,13 @@ function NewChatForm() {
 
     function startNewChat(e) {
         e.preventDefault();
-        socket.emit('create_chat', { recipient: newMessageInput }, (err, res) => {
-            if (err) {
-                setNewMessageError(true);
-                console.log(err);
-            } else {
-                navigate('/chat/' + res.chatroom);
-            }
-        });
+        axios.post("/chat/create", {recepient: newMessageInput})
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err.response.data.msg)
+            })
     }
 
     return (
