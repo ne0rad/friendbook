@@ -37,8 +37,8 @@ function App() {
       axios.post("/auth/token_login", { token: storageToken })
         .then((res) => {
           if (res.status === 200) {
-            setUser(res);
-            axios.defaults.headers.common['Authorization'] = res.token;
+            setUser(res.data);
+            axios.defaults.headers.common['Authorization'] = res.data.token;
           }
         })
         .catch((err) => {
@@ -51,7 +51,6 @@ function App() {
         })
 
     } else {
-      
       setLoading(false);
       setUser(null);
       clearCache();
@@ -93,7 +92,7 @@ function App() {
                       <Route path="/me" element={<Me />} />
                       <Route path="/settings" element={<Settings />} />
                       <Route path="/messages" element={<Messages />} />
-                      <Route path="/chat/:chatroom" element={<Chat />} />
+                      <Route path="/chat/:chatID" element={<Chat />} />
                       <Route path="/logout" element={<Logout logout={logout} />} />
                     </>
                     ) :

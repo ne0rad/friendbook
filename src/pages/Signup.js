@@ -1,12 +1,9 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { Button, FormControl, TextField, Box, Paper, Divider, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
-import { SocketContext } from "../config/context";
 import axios from "axios";
 
 function Signup({ login }) {
-
-    const socket = useContext(SocketContext);
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
