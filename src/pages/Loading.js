@@ -9,7 +9,7 @@ function Loading() {
     useEffect(() => {
         const timer = setTimeout(() => {
             setTooLong(true);
-        }, 8000);
+        }, 10000);
         return () => {
             setTooLong(false);
             clearTimeout(timer);
@@ -21,7 +21,7 @@ function Loading() {
             <Box maxWidth="sm" sx={{ p: 4 }}>
                 <CircularProgress />
                 <Typography mt="1rem">
-                    {!tooLong ? "Loading..." : "Still loading... There might be issues with the server. Try reloading the page."}
+                    {!tooLong ? "Loading..." : "Loading... Try refreshing the page."}
                 </Typography>
             </Box >
         </Container>
