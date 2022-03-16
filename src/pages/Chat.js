@@ -29,7 +29,6 @@ function Chat() {
                 navigate('/messages');
             } else {
                 if (cache && cache[chatID]) {
-                    console.log('Loaded from cache.');
                     setChatMembers(cache[chatID].members);
                     setMessages(cache[chatID].messages);
                     setLoading(false);
@@ -71,7 +70,6 @@ function Chat() {
 
     useEffect(() => {
         if (params.chatID !== chatID) {
-            console.log('Chat ID changed.');
             socket.emit('chat_leave', { chatID: chatID });
             socket.off('message');
             socket.off('connect');
@@ -112,7 +110,7 @@ function Chat() {
                                 [ {chatMembers.map(member => member.username).join(', ')} ]
                             </>)}
                     </Typography>
-
+                    
                     <MessageBox messages={messages} />
 
 
