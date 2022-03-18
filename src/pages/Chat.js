@@ -21,14 +21,12 @@ function Chat() {
     const [chatID, setChatID] = useState(params.chatID);
 
 
-
-
     useEffect(() => {
         if (loading) {
             if (!chatID || !chatID.match(/^[0-9a-fA-F]{24}$/)) {
                 navigate('/messages');
             } else {
-                if (cache && cache[chatID]) {
+                if (cache?.[chatID]) {
                     setChatMembers(cache[chatID].members);
                     setMessages(cache[chatID].messages);
                     setLoading(false);
@@ -61,22 +59,24 @@ function Chat() {
                     })
             }
         }
-        return () => {
-            socket.emit('chat_leave', { chatID: chatID });
-            socket.off('message');
-            socket.off('connect');
-        }
     }, [chatID, cache, navigate, loading]);
 
     useEffect(() => {
         if (params.chatID !== chatID) {
-            socket.emit('chat_leave', { chatID: chatID });
-            socket.off('message');
-            socket.off('connect');
+            console.log('chatID changed');
             setLoading(true);
             setChatID(params.chatID);
         }
     }, [params.chatID, chatID]);
+
+    useEffect(() => {
+        return () => {
+            console.log('unmounting');
+            socket.emit('chat_leave', { chatID: chatID });
+            socket.off('message');
+            socket.off('connect');
+        }
+    }, [chatID]);
 
 
     function sendMessage(e) {
@@ -110,7 +110,7 @@ function Chat() {
                                 [ {chatMembers.map(member => member.username).join(', ')} ]
                             </>)}
                     </Typography>
-                    
+
                     <MessageBox messages={messages} />
 
 
