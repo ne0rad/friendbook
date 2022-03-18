@@ -63,7 +63,6 @@ function Chat() {
 
     useEffect(() => {
         if (params.chatID !== chatID) {
-            console.log('chatID changed');
             setLoading(true);
             setChatID(params.chatID);
         }
@@ -71,7 +70,6 @@ function Chat() {
 
     useEffect(() => {
         return () => {
-            console.log('unmounting');
             socket.emit('chat_leave', { chatID: chatID });
             socket.off('message');
             socket.off('connect');
