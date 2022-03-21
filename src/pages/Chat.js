@@ -4,13 +4,14 @@ import { useContext, useEffect, useState } from "react";
 import Loading from '../pages/Loading';
 import { useNavigate, useParams } from "react-router-dom";
 import MessageBox from "../components/Chat/MessageBox";
-import { CacheContext, socket } from '../config/context';
+import { CacheContext, socket, UserContext } from '../config/context';
 import axios from "axios";
 
 function Chat() {
     const navigate = useNavigate();
     const params = useParams();
     const cache = useContext(CacheContext);
+    const user = useContext(UserContext);
 
     const [messages, setMessages] = useState([]);
     const [messageInput, setMessageInput] = useState('');
@@ -38,7 +39,7 @@ function Chat() {
                             setChatMembers(res.data.members);
                             setMessages(res.data.messages);
                             cache[chatID] = res.data;
-                            socket.emit('chat_join', { chatID: chatID });
+                            socket.emit('chat_join', { chatID: chatID, token: user.token });
 
                             socket.on('message', data => {
                                 if (data.chatID === chatID) {
@@ -49,7 +50,7 @@ function Chat() {
                             });
 
                             socket.on('connect', () => {
-                                socket.emit('chat_join', { chatID: chatID });
+                                socket.emit('chat_join', { chatID: chatID, token: user.token });
                             });
                         }
                     })
@@ -59,7 +60,7 @@ function Chat() {
                     })
             }
         }
-    }, [chatID, cache, navigate, loading]);
+    }, [chatID, cache, navigate, loading, user]);
 
     useEffect(() => {
         if (params.chatID !== chatID) {
@@ -70,11 +71,11 @@ function Chat() {
 
     useEffect(() => {
         return () => {
-            socket.emit('chat_leave', { chatID: chatID });
+            socket.emit('chat_leave', { chatID: chatID, token: user.token });
             socket.off('message');
             socket.off('connect');
         }
-    }, [chatID]);
+    }, [chatID, user]);
 
 
     function sendMessage(e) {
