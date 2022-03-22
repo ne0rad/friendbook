@@ -10,17 +10,19 @@ import EmailIcon from '@mui/icons-material/Email';
 import { useState, useContext } from 'react';
 import NotificationsDrawer from './NotificationsDrawer';
 import MessagesDrawer from './MessagesDrawer';
-import { UserContext } from "../config/context";
+import { UserContext, CacheContext } from "../config/context";
 
 
 function NavBar({ loading }) {
 
     const user = useContext(UserContext);
+    const cache = useContext(CacheContext);
 
     const [openNotifications, setOpenNotifications] = useState(false);
     const [openMessages, setOpenMessages] = useState(false);
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+
 
     const StyledBadge = styled(Badge)(() => ({
         '& .MuiBadge-badge': {
@@ -69,7 +71,7 @@ function NavBar({ loading }) {
                                         sx={{ color: 'white' }}
                                         onClick={() => toggleMessages()}
                                     >
-                                        <StyledBadge badgeContent={2} color="primary">
+                                        <StyledBadge badgeContent={cache.unreadChats} color="primary">
                                             <EmailIcon />
                                         </StyledBadge>
                                     </IconButton>
