@@ -44,7 +44,7 @@ function Signup({ login }) {
             setLoading(true);
             axios.post("/auth/signup", { username: username, password: password })
                 .then(res => {
-                    if (res.status === 200) login(res.data);
+                    if (res.status === 200) login(res.data.token);
                 })
                 .catch((err) => {
                     const error = err.response.data;
