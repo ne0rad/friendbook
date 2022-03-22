@@ -23,7 +23,12 @@ const Me = lazy(() => import("./pages/Me"));
 function App() {
 
   const [user, setUser] = useState(null);
-  const [cache, setCache] = useState({});
+
+  // Cache
+  const [unreadChats, setUnreadChats] = useState(0);
+  const [unreadNotifications, setUnreadNotifications] = useState(0);
+  const [chatList, setChatList] = useState([]);
+  const [chats, setChats] = useState({});
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -59,15 +64,14 @@ function App() {
     }
   }, []);
 
-  function login(res) {
-    setUser(res);
-    axios.defaults.headers.common['Authorization'] = res.token;
-    localStorage.setItem('token', res.token);
+  function login(token) {
+    localStorage.setItem('token', token);
     navigate('/');
+    window.location.reload();
   }
 
   function clearCache() {
-    setCache({});
+    return
   }
 
   function logout() {
@@ -80,7 +84,45 @@ function App() {
   return (
     <ThemeProvider theme={THEME}>
       <UserContext.Provider value={user}>
-        <CacheContext.Provider value={cache}>
+        <CacheContext.Provider value={{
+          chatList: chatList,
+          unreadChats: unreadChats,
+          unreadNotifications: unreadNotifications,
+          chats: chats,
+
+          updateUnreadChats: () => {
+            const unread = chatList.filter(chat => chat.readBy.indexOf(user._id) === -1);
+            if (unread) {
+              setUnreadChats(unread.length);
+            } else {
+              setUnreadChats(0);
+            }
+
+          },
+
+          updateUnreadNotifications: () => {
+            // TODO update unread notifications
+            setUnreadNotifications(unreadNotifications + 1);
+          },
+
+          updateChatList: (chatList) => {
+            setChatList(chatList);
+          },
+
+          updateChats: (chatID, chat) => {
+            let tempChats = { ...chats };
+            tempChats[chatID] = chat;
+            setChats(tempChats);
+          },
+
+          addMessage: (chatID, message) => {
+            if (chats[chatID]) {
+              let tempChats = { ...chats };
+              tempChats[chatID].messages.push(message);
+              setChats(tempChats);
+            }
+          }
+        }}>
           <Navbar loading={loading} />
           <Container maxWidth="lg" sx={{ mt: 8, mb: 2, p: 1 }} align="center">
             {loading ? <Loading /> : (
