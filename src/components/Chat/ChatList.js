@@ -16,14 +16,14 @@ function ChatList() {
     const cache = useContext(CacheContext);
 
     useEffect(() => {
-        if (cache?.chatList) {
+        if (cache.chatList) {
             setLoading(false);
         }
 
         axios.get("/chat/all")
             .then(res => {
                 if (res.status === 200) {
-                    cache.chatList = res.data.chats;
+                    cache.updateChatList(res.data.chats);
                 }
             })
             .catch(err => {
@@ -36,7 +36,7 @@ function ChatList() {
 
     return (
         <List>
-            {loading ? <Loading /> : cache?.chatList?.length > 0 ?
+            {loading ? <Loading /> : cache.chatList?.length > 0 ?
                 cache.chatList.map(chat =>
                     chat.lastMessage &&
                     (
