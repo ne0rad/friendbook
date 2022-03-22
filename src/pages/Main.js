@@ -1,6 +1,6 @@
 import { Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import Post from "../components/Post";
+import Post from "../components/Main/Post";
 import { useContext } from "react";
 import { UserContext } from "../config/context";
 

@@ -1,4 +1,4 @@
-import { Button, Paper, TextField, Typography } from "@mui/material";
+import { Button, Paper, TextField } from "@mui/material";
 import { Box } from "@mui/system";
 import { useContext, useEffect, useState } from "react";
 import Loading from '../pages/Loading';
@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import MessageBox from "../components/Chat/MessageBox";
 import { CacheContext, socket, UserContext } from '../config/context';
 import axios from "axios";
+import Members from "../components/Chat/Members";
 
 function Chat() {
     const navigate = useNavigate();
@@ -101,21 +102,26 @@ function Chat() {
     return (
         loading && !cache[chatID] ? <Loading /> :
             <Box maxWidth="sm">
-                <Paper elevation={3} sx={{ p: 2, minHeight: "80vh" }} >
+                <Paper elevation={3} sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                    p: 1.5,
+                    height: "80vh",
+                    minHeight: "250px"
+                }} >
 
-                    <Typography variant="body2">
-                        {loading && !cache[chatID] ? "Loading..." :
-                            (<>
-                                [ {chatMembers.map(member => member.username).join(', ')} ]
-                            </>)}
-                    </Typography>
+                    {loading && !cache[chatID] ?
+                        "Loading..." :
+                        <Members members={chatMembers} />
+                    }
 
                     <MessageBox messages={messages} />
 
 
                     <Box
                         component="form"
-                        sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+                        sx={{ display: "flex", alignItems: "center", justifyContent: "center", mt: 1 }}
                         onSubmit={(e) => {
                             sendMessage(e);
                         }}>

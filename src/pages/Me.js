@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import { useContext } from "react";
 import Details from "../components/Me/Details"
 import Friends from "../components/Me/Friends";
-import Post from "../components/Post";
+import Post from "../components/Main/Post";
 import { UserContext } from "../config/context";
 
 function Profile() {

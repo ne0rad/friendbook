@@ -9,7 +9,6 @@ import axios from "axios";
 
 function ChatList() {
 
-    const [chats, setChats] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const navigate = useNavigate();
@@ -17,14 +16,13 @@ function ChatList() {
     const cache = useContext(CacheContext);
 
     useEffect(() => {
-        if (cache && cache.chatList) {
-            setChats(cache.chatList);
+        if (cache?.chatList) {
             setLoading(false);
         }
+
         axios.get("/chat/all")
             .then(res => {
                 if (res.status === 200) {
-                    setChats(res.data.chats);
                     cache.chatList = res.data.chats;
                 }
             })
@@ -38,8 +36,8 @@ function ChatList() {
 
     return (
         <List>
-            {loading ? <Loading /> : chats.length > 0 ?
-                chats.map(chat =>
+            {loading ? <Loading /> : cache?.chatList?.length > 0 ?
+                cache.chatList.map(chat =>
                     chat.lastMessage &&
                     (
                         <ListItem

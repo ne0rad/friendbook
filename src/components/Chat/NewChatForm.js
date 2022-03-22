@@ -38,7 +38,7 @@ function NewChatForm() {
                         onKeyDown={() => setNewMessageError(false)}
                         error={newMessageError}
                     />
-                    <Button type="submit" variant="contained" size="small">New Chat</Button>
+                    <Button type="submit" variant="contained" size="small">Start Chat</Button>
                 </Box>
             </ListItem>
         </List>

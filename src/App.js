@@ -1,22 +1,24 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { Container } from "@mui/material";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
 import { API_URL, THEME } from './config/config';
 import { UserContext, CacheContext } from "./config/context";
 import Navbar from "./components/Navbar";
-import Main from "./pages/Main";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
-import Signup from "./pages/Signup";
-import Me from "./pages/Me";
 import Loading from "./pages/Loading";
-import Settings from "./pages/Settings";
-import Logout from "./pages/Logout";
-import Messages from "./pages/Messages";
-import Chat from "./pages/Chat";
 import axios from "axios";
+
+
+const Main = lazy(() => import("./pages/Main"));
+const Home = lazy(() => import("./pages/Home"));
+const Login = lazy(() => import("./pages/Login"));
+const Signup = lazy(() => import("./pages/Signup"));
+const Logout = lazy(() => import("./pages/Logout"));
+const Chat = lazy(() => import("./pages/Chat"));
+const Messages = lazy(() => import("./pages/Messages"));
+const Settings = lazy(() => import("./pages/Settings"));
+const Me = lazy(() => import("./pages/Me"));
 
 function App() {
 
@@ -88,20 +90,41 @@ function App() {
                   {user ?
                     // LOGGED IN
                     (<>
-                      <Route path="/" element={<Main />} />
-                      <Route path="/me" element={<Me />} />
-                      <Route path="/settings" element={<Settings />} />
-                      <Route path="/messages" element={<Messages />} />
-                      <Route path="/chat/:chatID" element={<Chat />} />
-                      <Route path="/logout" element={<Logout logout={logout} />} />
+                      <Route path="/" element={<Suspense fallback={<Loading />}>
+                        <Main />
+                      </Suspense>} />
+                      <Route path="/me" element={<Suspense fallback={<Loading />}>
+                        <Me />
+                      </Suspense>} />
+                      <Route path="/settings" element={<Suspense fallback={<Loading />}>
+                        <Settings />
+                      </Suspense>} />
+                      <Route path="/messages" element={
+                        <Suspense fallback={<Loading />}>
+                          <Messages />
+                        </Suspense>} />
+                      <Route path="/chat/:chatID" element={
+                        <Suspense fallback={<Loading />}>
+                          <Chat />
+                        </Suspense>
+                      } />
+                      <Route path="/logout" element={<Suspense fallback={<Loading />}>
+                        <Logout logout={logout} />
+                      </Suspense>} />
                     </>
                     ) :
                     // NOT LOGGED IN
                     (
                       <>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/login" element={<Login login={login} />} />
-                        <Route path="/signup" element={<Signup login={login} />} />
+                        <Route path="/" element={<Suspense fallback={<Loading />}>
+                          <Home />
+                        </Suspense>} />
+                        <Route path="/login" element={<Suspense fallback={<Loading />}>
+                          <Login login={login} />
+                        </Suspense>} />
+                        <Route path="/signup" element={<Suspense fallback={<Loading />}>
+                          <Signup login={login} />
+                        </Suspense>} />
                       </>
                     )}
 
