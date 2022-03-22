@@ -28,9 +28,9 @@ function Chat() {
             if (!chatID || !chatID.match(/^[0-9a-fA-F]{24}$/)) {
                 navigate('/messages');
             } else {
-                if (cache?.[chatID]) {
-                    setChatMembers(cache[chatID].members);
-                    setMessages(cache[chatID].messages);
+                if (cache?.chats[chatID]) {
+                    setChatMembers(cache.chats[chatID].members);
+                    setMessages(cache.chats[chatID].messages);
                     setLoading(false);
                 }
                 axios.post("/chat/join", { chatID: chatID })
@@ -39,19 +39,21 @@ function Chat() {
                         if (res.status === 200) {
                             setChatMembers(res.data.members);
                             setMessages(res.data.messages);
-                            cache[chatID] = res.data;
-                            socket.emit('chat_join', { chatID: chatID, token: user.token });
+                            cache.updateChats(chatID, res.data);
 
-                            socket.on('message', data => {
-                                if (data.chatID === chatID) {
-                                    setMessages(messages => [...messages, data.message]);
-                                    cache[chatID].messages.push(data.message);
-                                    axios.post('/chat/read', { chatID: chatID });
-                                }
-                            });
+                            socket.emit('chat_join', { chatID: chatID, token: user.token });
 
                             socket.on('connect', () => {
                                 socket.emit('chat_join', { chatID: chatID, token: user.token });
+                            });
+
+                            socket.on('message', data => {
+                                cache.updateUnreadChats();
+                                if (data.chatID === chatID) {
+                                    setMessages(messages => [...messages, data.message]);
+                                    cache.addMessage(chatID, data.message);
+                                    axios.post('/chat/read', { chatID: chatID });
+                                }
                             });
                         }
                     })
