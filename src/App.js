@@ -43,7 +43,11 @@ function App() {
       axios.post("/auth/token_login", { token: storageToken })
         .then((res) => {
           if (res.status === 200) {
-            setUser(res.data);
+            setUser({ username: res.data.username, token: res.data.token, _id: res.data._id });
+            console.log(res.data)
+            setChatList(res.data.chatList);
+            setUnreadChats(res.data.unreadChats);
+
             axios.defaults.headers.common['Authorization'] = res.data.token;
           }
         })
