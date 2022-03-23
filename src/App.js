@@ -34,13 +34,12 @@ function App() {
   const navigate = useNavigate();
 
 
-  // Login from local storage
+  // Login with local storage token
   useEffect(() => {
     const storageToken = localStorage.getItem('token');
     axios.defaults.baseURL = API_URL;
 
     if (storageToken) {
-
       axios.post("/auth/token_login", { token: storageToken })
         .then((res) => {
           if (res.status === 200) {
@@ -51,7 +50,6 @@ function App() {
         .catch((err) => {
           setUser(null);
           localStorage.removeItem('token');
-          clearCache();
         })
         .then(() => {
           setLoading(false);
@@ -60,24 +58,17 @@ function App() {
     } else {
       setLoading(false);
       setUser(null);
-      clearCache();
     }
   }, []);
 
   function login(token) {
     localStorage.setItem('token', token);
-    navigate('/');
     window.location.reload();
-  }
-
-  function clearCache() {
-    return
   }
 
   function logout() {
     localStorage.removeItem('token');
     setUser(null);
-    clearCache();
     navigate('/');
   }
 
@@ -153,6 +144,14 @@ function App() {
                       <Route path="/logout" element={<Suspense fallback={<Loading />}>
                         <Logout logout={logout} />
                       </Suspense>} />
+
+                      {
+                        // Not found is the main page
+                      }
+                      <Route path="*" element={<Suspense fallback={<Loading />}>
+                        <Main />
+                      </Suspense>} />
+
                     </>
                     ) :
                     // NOT LOGGED IN
@@ -161,16 +160,17 @@ function App() {
                         <Route path="/" element={<Suspense fallback={<Loading />}>
                           <Home />
                         </Suspense>} />
+
                         <Route path="/login" element={<Suspense fallback={<Loading />}>
                           <Login login={login} />
                         </Suspense>} />
+
                         <Route path="/signup" element={<Suspense fallback={<Loading />}>
                           <Signup login={login} />
                         </Suspense>} />
+                        <Route path="*" element={<NotFound />} />
                       </>
                     )}
-
-                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </>
             )}
