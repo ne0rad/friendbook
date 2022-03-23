@@ -2,7 +2,7 @@ import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import MarkEmailUnreadIcon from '@mui/icons-material/MarkEmailUnread';
 import DraftsOutlinedIcon from '@mui/icons-material/DraftsOutlined';
 import { useNavigate } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { UserContext, CacheContext } from "../../config/context";
 import Loading from "../../pages/Loading";
 import axios from "axios";
@@ -11,28 +11,37 @@ function ChatList() {
 
     const [loading, setLoading] = useState(true);
 
+    const _isMounted = useRef(true);
+
     const navigate = useNavigate();
     const user = useContext(UserContext);
     const cache = useContext(CacheContext);
 
     useEffect(() => {
-        if (cache.chatList) {
-            setLoading(false);
+        return () => {
+            _isMounted.current = false;
         }
+    }, []);
 
-        axios.get("/chat/all")
-            .then(res => {
-                if (res.status === 200) {
-                    cache.updateChatList(res.data.chats);
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            .then(() => {
+    useEffect(() => {
+        if (loading) {
+            if (cache.chatList) {
                 setLoading(false);
-            })
-    }, [user, cache]);
+            }
+            axios.get("/chat/all")
+                .then(res => {
+                    if (res.status === 200) {
+                        cache.updateChatList(res.data.chats);
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+                .then(() => {
+                    if (_isMounted.current) setLoading(false);
+                })
+        }
+    }, [cache, loading]);
 
     return (
         <List>
