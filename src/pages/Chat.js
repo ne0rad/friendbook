@@ -47,14 +47,14 @@ function Chat() {
                                 socket.emit('chat_join', { chatID: chatID, token: user.token });
                             });
 
-                            socket.on('message', data => {
-                                cache.updateUnreadChats();
-                                if (data.chatID === chatID) {
-                                    setMessages(messages => [...messages, data.message]);
-                                    cache.addMessage(chatID, data.message);
-                                    axios.post('/chat/read', { chatID: chatID });
-                                }
-                            });
+                            // socket.on('message', data => {
+                            //     cache.updateUnreadChats();
+                            //     if (data.chatID === chatID) {
+                            //         setMessages(messages => [...messages, data.message]);
+                            //         cache.addMessage(chatID, data.message);
+                            //         axios.post('/chat/read', { chatID: chatID });
+                            //     }
+                            // });
                         }
                     })
                     .catch(err => {
@@ -119,7 +119,6 @@ function Chat() {
                     }
 
                     <MessageBox messages={messages} />
-
 
                     <Box
                         component="form"

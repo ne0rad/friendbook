@@ -1,9 +1,9 @@
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState, lazy, Suspense, useContext } from "react";
 import { Container } from "@mui/material";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material/styles';
 import { API_URL, THEME } from './config/config';
-import { UserContext, CacheContext } from "./config/context";
+import { UserContext, CacheContext, SocketContext } from "./config/context";
 import Navbar from "./components/Navbar";
 import NotFound from "./pages/NotFound";
 import Loading from "./pages/Loading";
@@ -30,11 +30,13 @@ function App() {
   const [chatList, setChatList] = useState([]);
   const [chats, setChats] = useState({});
   const [loading, setLoading] = useState(true);
+  const [newMessage, setNewMessage] = useState(false);
 
   const navigate = useNavigate();
+  const socket = useContext(SocketContext);
 
-
-  // Login with local storage token
+  // First Load
+  // Login, join socket room, get user data
   useEffect(() => {
     const storageToken = localStorage.getItem('token');
     axios.defaults.baseURL = API_URL;
@@ -44,11 +46,17 @@ function App() {
         .then((res) => {
           if (res.status === 200) {
             setUser({ username: res.data.username, token: res.data.token, _id: res.data._id });
-            console.log(res.data)
             setChatList(res.data.chatList);
             setUnreadChats(res.data.unreadChats);
 
             axios.defaults.headers.common['Authorization'] = res.data.token;
+
+            socket.emit('join', { token: res.data.token });
+
+            socket.on('connect', () => {
+              socket.emit('join', { token: res.data.token });
+            });
+
           }
         })
         .catch((err) => {
@@ -63,7 +71,34 @@ function App() {
       setLoading(false);
       setUser(null);
     }
-  }, []);
+  }, [socket]);
+
+  // Socket Listeners
+  useEffect(() => {
+    if (user) {
+      socket.on('message', res => {
+        setNewMessage(res);
+      });
+    }
+    return () => {
+      socket.off('message');
+    }
+  }, [socket, user]);
+
+  // New Message
+  useEffect(() => {
+    if (newMessage) {
+      const newChats = { ...chats };
+
+      if (newChats[newMessage.chatID]) {
+        newChats[newMessage.chatID].messages.push(newMessage.data);
+        setChats(newChats);
+      }
+
+      setNewMessage(false);
+    }
+  }, [newMessage, chatList, chats]);
+
 
   function login(token) {
     localStorage.setItem('token', token);
