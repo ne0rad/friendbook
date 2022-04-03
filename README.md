@@ -6,6 +6,8 @@ Learning project. Making a fully featured social network using react and nodejs.
 
 https://github.com/ne0rad/friendbook_api
 
+## Commands
+
 ### `npm start`
 
 Runs the app in the development mode.\
