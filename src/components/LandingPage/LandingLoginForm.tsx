@@ -27,6 +27,7 @@ export default function LandingLoginForm(): JSX.Element {
         size="small"
         variant="outlined"
         label="Password"
+        type="password"
         sx={{ mb: 4 }}
         fullWidth
       />

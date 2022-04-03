@@ -27,6 +27,7 @@ export default function LandingSignupForm(): JSX.Element {
         size="small"
         variant="outlined"
         label="Password"
+        type="password"
         sx={{ mb: 2 }}
         fullWidth
       />
@@ -34,6 +35,7 @@ export default function LandingSignupForm(): JSX.Element {
         size="small"
         variant="outlined"
         label="Repeat Password"
+        type="password"
         sx={{ mb: 4 }}
         fullWidth
       />
