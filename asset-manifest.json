@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/friendbook/static/css/main.6c18b3d6.css",
+    "main.js": "/friendbook/static/js/main.31f2011b.js",
+    "index.html": "/friendbook/index.html",
+    "main.6c18b3d6.css.map": "/friendbook/static/css/main.6c18b3d6.css.map",
+    "main.31f2011b.js.map": "/friendbook/static/js/main.31f2011b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6c18b3d6.css",
+    "static/js/main.31f2011b.js"
+  ]
+}
