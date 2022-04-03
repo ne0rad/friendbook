@@ -29,7 +29,13 @@ export default function LandingAuthButtons(): JSX.Element {
           Sign-up
         </Button>
       </Box>
-      <Button>Demo Preview</Button>
+      <Button
+        onClick={(): void => {
+          alert("Coming soon!");
+        }}
+      >
+        Demo Preview
+      </Button>
     </>
   );
 }
