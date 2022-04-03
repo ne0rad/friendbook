@@ -1,7 +1,7 @@
 import {
   LandingMainBox,
   LandingTitleText,
-  LandingAuthButtons
+  LandingAuthButtons,
 } from "../../components";
 
 export default function LandingPage(): JSX.Element {

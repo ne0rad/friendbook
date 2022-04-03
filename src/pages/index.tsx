@@ -1,6 +1,11 @@
 import NotFoundPage from "./NotFoundPage";
-import LandingPage from "./Landing/LandingPage";
-import LoginPage from "./Landing/LoginPage";
-import SignupPage from "./Landing/SignupPage";
+import LandingRouter from "./Landing/LandingRouter";
+import LoadingPage from "./LoadingPage";
+import MainRouter from "./Main/MainRouter";
 
-export { NotFoundPage, LandingPage, LoginPage, SignupPage };
+export {
+  NotFoundPage,
+  LoadingPage,
+  LandingRouter,
+  MainRouter
+};
