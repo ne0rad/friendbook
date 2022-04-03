@@ -48,8 +48,8 @@ export default function LandingSignupForm(): JSX.Element {
         {"Sign-up"}
       </Button>
       <Box textAlign="center" sx={{ pt: 3 }}>
-        <Typography variant="body1">Already have an account?</Typography>
-        <Link to="/login">Login Here</Link>
+      <Typography variant="subtitle2">Already have an account?</Typography>
+        <Typography variant="subtitle2"><Link to="/login">Login here</Link></Typography>
       </Box>
     </Box>
   );

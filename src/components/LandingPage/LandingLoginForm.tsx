@@ -41,8 +41,8 @@ export default function LandingLoginForm(): JSX.Element {
         {"Login"}
       </Button>
       <Box textAlign="center" sx={{ pt: 3 }}>
-        <Typography variant="body1">Don't have an account?</Typography>
-        <Link to="/signup">Sign-up Here</Link>
+        <Typography variant="subtitle2">Don't have an account?</Typography>
+        <Typography variant="subtitle2"><Link to="/signup">Sign-up here</Link></Typography>
       </Box>
     </Box>
   );
