@@ -1,12 +1,25 @@
-import { PageNotFound, LandingPage } from "./pages";
+import { LandingPage, LoginPage, NotFoundPage, SignupPage } from "./pages";
 import { Routes, Route } from "react-router-dom";
 
-export default function App() {
+const loggedIn = false;
+
+export default function App(): JSX.Element {
   return (
     <>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="*" element={<PageNotFound />} />
+        {loggedIn ? (
+          <>
+            <Route path="/" element={<LandingPage />} />
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignupPage />} />
+          </>
+        )}
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </>
   );
