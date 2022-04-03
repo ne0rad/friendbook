@@ -1,6 +1,23 @@
-import LandingMainBox from "./landing/LandingMainBox";
-import LandingTitleText from "./landing/LandingTitleText";
-import LandingAuthButtons from "./landing/LandingAuthButtons";
-import LandingFormBox from "./landing/LandingFormBox";
+// General
+import Loading from "./General/Loading";
 
-export { LandingMainBox, LandingTitleText, LandingAuthButtons, LandingFormBox };
+// LandingPage
+import LandingMainBox from "./LandingPage/LandingMainBox";
+import LandingTitleText from "./LandingPage/LandingTitleText";
+import LandingAuthButtons from "./LandingPage/LandingAuthButtons";
+import LandingFormBox from "./LandingPage/LandingFormBox";
+import LandingLoginForm from "./LandingPage/LandingLoginForm";
+import LandingSignupForm from "./LandingPage/LandingSignupForm";
+
+// General
+export { Loading };
+
+// LandingPage
+export {
+  LandingMainBox,
+  LandingTitleText,
+  LandingAuthButtons,
+  LandingFormBox,
+  LandingLoginForm,
+  LandingSignupForm,
+};
