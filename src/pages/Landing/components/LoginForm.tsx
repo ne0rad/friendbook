@@ -1,7 +1,8 @@
-import { Box, Button, Divider, Link, TextField, Typography } from "@mui/material";
+import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { InputWrapper } from ".";
 
 export default function LoginForm(): JSX.Element {
   const navigate = useNavigate();
@@ -47,39 +48,46 @@ export default function LoginForm(): JSX.Element {
       }}
       onSubmit={handleSubmit}
     >
-      <Typography variant="h5" align="center" sx={{ mb: 3, mt: 0, p: 0 }}>
+      <Typography variant="h5" align="center">
         {"Login"}
       </Typography>
-      <TextField
-        size="small"
-        variant="outlined"
-        label="Username"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          setUsername(e.target.value.replace(/[^a-zA-Z\d]/, ""));
-        }}
-        value={username}
-        error={usernameError !== ""}
-        helperText={usernameError}
-        fullWidth
-        autoFocus
-      />
-      <TextField
-        size="small"
-        variant="outlined"
-        label="Password"
-        type="password"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          setPassword(e.target.value);
-        }}
-        value={password}
-        error={passwordError !== ""}
-        helperText={passwordError}
-        fullWidth
-      />
-      <Divider  />
+
+      <InputWrapper>
+        <TextField
+          size="small"
+          variant="outlined"
+          label="Username"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+            setUsername(e.target.value.replace(/[^a-zA-Z\d]/, ""));
+          }}
+          value={username}
+          error={usernameError !== ""}
+          helperText={usernameError}
+          fullWidth
+          autoFocus
+        />
+      </InputWrapper>
+
+      <InputWrapper>
+        <TextField
+          size="small"
+          variant="outlined"
+          label="Password"
+          type="password"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+            setPassword(e.target.value);
+          }}
+          value={password}
+          error={passwordError !== ""}
+          helperText={passwordError}
+          fullWidth
+        />
+      </InputWrapper>
+
       <Button
         variant="contained"
         type="submit"
+        sx={{ mt: 2 }}
         startIcon={<LoginIcon />}
         fullWidth
       >

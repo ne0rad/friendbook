@@ -1,4 +1,5 @@
-import { Box, Button, Divider, Link, TextField, Typography } from "@mui/material";
+import { Box, Button, Link, TextField, Typography } from "@mui/material";
+import { InputWrapper } from ".";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -84,58 +85,69 @@ export default function SignupForm(): JSX.Element {
         {"Sign-up"}
       </Typography>
 
-      <TextField
-        size="small"
-        variant="outlined"
-        label="Username"
-        type="text"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          setUsername(e.target.value.replace(/[^a-zA-Z\d]/, ""));
-        }}
-        value={username}
-        error={usernameError !== ""}
-        helperText={usernameError}
-        fullWidth
-        autoFocus
-      />
-      <TextField
-        size="small"
-        variant="outlined"
-        label="Password"
-        type="password"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          setPassword(e.target.value);
-        }}
-        value={password}
-        error={passwordError !== ""}
-        helperText={passwordError}
-        fullWidth
-      />
-      <TextField
-        size="small"
-        variant="outlined"
-        label="Confirm Password"
-        type="password"
-        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          setPasswordConfirm(e.target.value);
-        }}
-        value={passwordConfirm}
-        error={passwordConfirmError !== ""}
-        helperText={passwordConfirmError}
-        fullWidth
-      />
-      <Divider />
+      <InputWrapper>
+        <TextField
+          size="small"
+          variant="outlined"
+          label="Username"
+          type="text"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+            setUsername(e.target.value.replace(/[^a-zA-Z\d]/, ""));
+          }}
+          value={username}
+          error={usernameError !== ""}
+          helperText={usernameError}
+          fullWidth
+          autoFocus
+        />
+      </InputWrapper>
+
+      <InputWrapper>
+        <TextField
+          size="small"
+          variant="outlined"
+          label="Password"
+          type="password"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+            setPassword(e.target.value);
+          }}
+          value={password}
+          error={passwordError !== ""}
+          helperText={passwordError}
+          fullWidth
+        />
+      </InputWrapper>
+
+      <InputWrapper>
+        <TextField
+          size="small"
+          variant="outlined"
+          label="Confirm Password"
+          type="password"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+            setPasswordConfirm(e.target.value);
+          }}
+          value={passwordConfirm}
+          error={passwordConfirmError !== ""}
+          helperText={passwordConfirmError}
+          fullWidth
+        />
+      </InputWrapper>
+
       <Button
         variant="contained"
         type="submit"
         startIcon={<LoginIcon />}
+        sx={{ mt: 2 }}
         fullWidth
       >
         {"Sign-up"}
       </Button>
 
       <Box textAlign="center">
-        <Typography variant="subtitle2">{"Already have an account?"}</Typography>
+        <Typography variant="subtitle2">
+          {"Already have an account?"}
+        </Typography>
         <Link
           sx={{ cursor: "pointer" }}
           variant="subtitle2"

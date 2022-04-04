@@ -5,6 +5,7 @@ import MainBox from "./MainBox";
 import SignupForm from "./SignupForm";
 import TitleText from "./TitleText";
 import GoBackButton from "./GoBackButton";
+import InputWrapper from "./InputWrapper";
 
 export {
   AuthButtons,
@@ -14,4 +15,5 @@ export {
   SignupForm,
   TitleText,
   GoBackButton,
+  InputWrapper,
 };
