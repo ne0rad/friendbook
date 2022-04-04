@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export default function LandingFormBox({ children }: Props): JSX.Element {
+export default function FormBox({ children }: Props): JSX.Element {
   const navigate = useNavigate();
   return (
     <Box

@@ -3,7 +3,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export default function LandingLoginForm(): JSX.Element {
+export default function LoginForm(): JSX.Element {
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
@@ -17,14 +17,20 @@ export default function LandingLoginForm(): JSX.Element {
     setPasswordError("");
   }, [username, password]);
 
+  function hasErrors() {
+    return usernameError !== "" || passwordError !== "";
+  }
+
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
     // TODO: Login
-    if (username === "") {
-      setUsernameError("Username is required");
-    }
-    if (password === "") {
-      setPasswordError("Password is required");
+    if (!hasErrors()) {
+      if (username === "") {
+        setUsernameError("Username is required");
+      }
+      if (password === "") {
+        setPasswordError("Password is required");
+      }
     }
   }
 

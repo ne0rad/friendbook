@@ -1,14 +1,10 @@
-import {
-  LandingMainBox,
-  LandingTitleText,
-  LandingAuthButtons,
-} from "../../components";
+import { AuthButtons, MainBox, TitleText } from "./components";
 
 export default function LandingPage(): JSX.Element {
   return (
-    <LandingMainBox>
-      <LandingTitleText />
-      <LandingAuthButtons />
-    </LandingMainBox>
+    <MainBox>
+      <TitleText />
+      <AuthButtons />
+    </MainBox>
   );
 }

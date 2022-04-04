@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { blue } from "@mui/material/colors";
 
-export default function LandingTextContent(): JSX.Element {
+export default function TitleText(): JSX.Element {
   return (
     <>
       <Box

@@ -1,15 +1,11 @@
-import {
-  LandingMainBox,
-  LandingFormBox,
-  LandingLoginForm,
-} from "../../components";
+import { FormBox, LoginForm, MainBox } from "./components";
 
 export default function LoginPage(): JSX.Element {
   return (
-    <LandingMainBox>
-      <LandingFormBox>
-        <LandingLoginForm />
-      </LandingFormBox>
-    </LandingMainBox>
+    <MainBox>
+      <FormBox>
+        <LoginForm />
+      </FormBox>
+    </MainBox>
   );
 }

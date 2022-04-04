@@ -1,6 +1,6 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { Loading } from "../components";
+import { Loading } from "./components";
 
 export default function LoadingPage(): JSX.Element {
   return (

@@ -1,7 +1,7 @@
 import { Box, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export default function LandingAuthButtons(): JSX.Element {
+export default function AuthButtons(): JSX.Element {
   const navigate = useNavigate();
 
   return (
