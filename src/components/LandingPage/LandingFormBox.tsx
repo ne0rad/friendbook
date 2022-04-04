@@ -12,7 +12,7 @@ export default function LandingFormBox({ children }: Props): JSX.Element {
     <Box
       sx={{
         maxWidth: {
-          sm: "350px",
+          sm: "330px",
           xs: "100%",
         },
         width: "100%",
