@@ -5,6 +5,7 @@ export default function LandingLoginForm(): JSX.Element {
   return (
     <Box
       component="form"
+      sx={{p: 2}}
       onSubmit={(e: React.FormEvent): void => {
         e.preventDefault();
         // TODO: Login
@@ -34,16 +35,18 @@ export default function LandingLoginForm(): JSX.Element {
 
       <Button
         variant="contained"
-        size="large"
         type="submit"
         sx={{ display: "block" }}
         fullWidth
       >
         {"Login"}
       </Button>
+
       <Box textAlign="center" sx={{ pt: 3 }}>
         <Typography variant="subtitle2">Don't have an account?</Typography>
-        <Typography variant="subtitle2"><Link to="/signup">Sign-up here</Link></Typography>
+        <Typography variant="subtitle2">
+          <Link to="/signup">Sign-up here</Link>
+        </Typography>
       </Box>
     </Box>
   );

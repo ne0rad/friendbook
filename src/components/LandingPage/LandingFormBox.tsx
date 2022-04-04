@@ -11,18 +11,21 @@ export default function LandingFormBox({ children }: Props): JSX.Element {
   return (
     <Box
       sx={{
-        maxWidth: "300px",
-        mb: 3,
+        maxWidth: {
+          sm: "350px",
+          xs: "100%",
+        },
+        width: "100%",
+        backgroundColor: "#fff",
         border: {
           sm: "1px solid #ccc",
           xs: "none",
         },
-        p: 3,
         borderRadius: "5px",
       }}
     >
       {children}
-      <Button sx={{ mt: 3 }} fullWidth onClick={() => navigate("/")}>
+      <Button sx={{ mt: 1 }} fullWidth onClick={() => navigate("/")}>
         Go Back
       </Button>
     </Box>

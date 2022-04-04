@@ -17,7 +17,7 @@ export default function MainBox({ children }: Props): JSX.Element {
         },
         height: "100vh",
         width: "100vw",
-        minWidth: "260px",
+        minWidth: "240px",
         minHeight: "500px",
         m: 0,
         px: {
