@@ -1,7 +1,9 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Button, Link, TextField, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function LandingSignupForm(): JSX.Element {
+  const navigate = useNavigate();
+
   return (
     <Box
       component="form"
@@ -52,9 +54,14 @@ export default function LandingSignupForm(): JSX.Element {
 
       <Box textAlign="center" sx={{ pt: 3 }}>
         <Typography variant="subtitle2">Already have an account?</Typography>
-        <Typography variant="subtitle2">
-          <Link to="/login">Login here</Link>
-        </Typography>
+        <Link
+          sx={{ cursor: "pointer" }}
+          variant="subtitle2"
+          underline="hover"
+          onClick={() => navigate("/login")}
+        >
+          Login here
+        </Link>
       </Box>
     </Box>
   );
