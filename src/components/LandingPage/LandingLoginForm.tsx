@@ -1,8 +1,13 @@
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
+import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function LandingLoginForm(): JSX.Element {
   const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <Box
@@ -11,7 +16,10 @@ export default function LandingLoginForm(): JSX.Element {
       onSubmit={(e: React.FormEvent): void => {
         e.preventDefault();
         // TODO: Login
-        console.log("submitted");
+        console.log({
+          username,
+          password
+        });
       }}
     >
       <Typography variant="h5" align="center" sx={{ mb: 3, mt: 0, p: 0 }}>
@@ -23,6 +31,10 @@ export default function LandingLoginForm(): JSX.Element {
         variant="outlined"
         label="Username"
         sx={{ mb: 2 }}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+          setUsername(e.target.value);
+        }}
+        value={username}
         fullWidth
         autoFocus
       />
@@ -32,13 +44,17 @@ export default function LandingLoginForm(): JSX.Element {
         label="Password"
         type="password"
         sx={{ mb: 4 }}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+          setPassword(e.target.value);
+        }}
+        value={password}
         fullWidth
       />
 
       <Button
         variant="contained"
         type="submit"
-        sx={{ display: "block" }}
+        startIcon={<LoginIcon />}
         fullWidth
       >
         {"Login"}

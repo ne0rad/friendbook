@@ -1,8 +1,14 @@
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
+import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function LandingSignupForm(): JSX.Element {
   const navigate = useNavigate();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
 
   return (
     <Box
@@ -11,7 +17,11 @@ export default function LandingSignupForm(): JSX.Element {
       onSubmit={(e: React.FormEvent): void => {
         e.preventDefault();
         // TODO: Signup
-        console.log("submitted");
+        console.log({
+          username,
+          password,
+          passwordConfirm
+        });
       }}
     >
       <Typography variant="h5" align="center" sx={{ mb: 3, mt: 0, p: 0 }}>
@@ -23,6 +33,10 @@ export default function LandingSignupForm(): JSX.Element {
         variant="outlined"
         label="Username"
         sx={{ mb: 2 }}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+          setUsername(e.target.value);
+        }}
+        value={username}
         fullWidth
         autoFocus
       />
@@ -32,21 +46,29 @@ export default function LandingSignupForm(): JSX.Element {
         label="Password"
         type="password"
         sx={{ mb: 2 }}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+          setPassword(e.target.value);
+        }}
+        value={password}
         fullWidth
       />
       <TextField
         size="small"
         variant="outlined"
-        label="Repeat Password"
+        label="Confirm Password"
         type="password"
         sx={{ mb: 4 }}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
+          setPasswordConfirm(e.target.value);
+        }}
+        value={passwordConfirm}
         fullWidth
       />
 
       <Button
         variant="contained"
         type="submit"
-        sx={{ display: "block" }}
+        startIcon={<LoginIcon />}
         fullWidth
       >
         {"Sign-up"}
