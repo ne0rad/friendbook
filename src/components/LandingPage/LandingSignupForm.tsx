@@ -1,7 +1,7 @@
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LandingSignupForm(): JSX.Element {
   const navigate = useNavigate();
@@ -9,6 +9,45 @@ export default function LandingSignupForm(): JSX.Element {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordConfirmError, setPasswordConfirmError] = useState("");
+
+  // Username Errors Check
+  useEffect(() => {
+    if (username.length < 3 && username !== "") {
+      setUsernameError("Username must be at least 3 characters");
+    } else if (username.length >= 3 || username === "") {
+      setUsernameError("");
+    }
+  }, [username]);
+
+  // Password Errors Check
+  useEffect(() => {
+    if (password.length < 3 && password !== "") {
+      setPasswordError("Password must be at least 3 characters");
+    } else if (password.length >= 3 || password === "") {
+      setPasswordError("");
+    }
+  }, [password]);
+
+  // Password Confirm Errors Check
+  useEffect(() => {
+    if (
+      password !== passwordConfirm &&
+      passwordConfirm !== "" &&
+      password !== ""
+    ) {
+      setPasswordConfirmError("Passwords do not match");
+    } else if (
+      password === passwordConfirm ||
+      passwordConfirm === "" ||
+      password === ""
+    ) {
+      setPasswordConfirmError("");
+    }
+  }, [password, passwordConfirm]);
 
   return (
     <Box
@@ -20,7 +59,7 @@ export default function LandingSignupForm(): JSX.Element {
         console.log({
           username,
           password,
-          passwordConfirm
+          passwordConfirm,
         });
       }}
     >
@@ -34,9 +73,11 @@ export default function LandingSignupForm(): JSX.Element {
         label="Username"
         sx={{ mb: 2 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          setUsername(e.target.value);
+          setUsername(e.target.value.replace(/[^a-zA-Z\d]/, ""));
         }}
         value={username}
+        error={usernameError !== ""}
+        helperText={usernameError}
         fullWidth
         autoFocus
       />
@@ -50,6 +91,8 @@ export default function LandingSignupForm(): JSX.Element {
           setPassword(e.target.value);
         }}
         value={password}
+        error={passwordError !== ""}
+        helperText={passwordError}
         fullWidth
       />
       <TextField
@@ -62,6 +105,8 @@ export default function LandingSignupForm(): JSX.Element {
           setPasswordConfirm(e.target.value);
         }}
         value={passwordConfirm}
+        error={passwordConfirmError !== ""}
+        helperText={passwordConfirmError}
         fullWidth
       />
 
