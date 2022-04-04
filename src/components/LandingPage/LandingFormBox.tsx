@@ -25,7 +25,7 @@ export default function LandingFormBox({ children }: Props): JSX.Element {
       }}
     >
       {children}
-      <Button sx={{ mt: 1 }} fullWidth onClick={() => navigate("/")}>
+      <Button sx={{ mt: 0 }} fullWidth onClick={() => navigate("/")}>
         Go Back
       </Button>
     </Box>
