@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/friendbook/static/css/main.adece0a5.css",
-    "main.js": "/friendbook/static/js/main.235a9a1e.js",
+    "main.js": "/friendbook/static/js/main.dd5896e9.js",
     "index.html": "/friendbook/index.html",
     "main.adece0a5.css.map": "/friendbook/static/css/main.adece0a5.css.map",
-    "main.235a9a1e.js.map": "/friendbook/static/js/main.235a9a1e.js.map"
+    "main.dd5896e9.js.map": "/friendbook/static/js/main.dd5896e9.js.map"
   },
   "entrypoints": [
     "static/css/main.adece0a5.css",
-    "static/js/main.235a9a1e.js"
+    "static/js/main.dd5896e9.js"
   ]
 }
