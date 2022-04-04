@@ -1,7 +1,7 @@
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function LandingLoginForm(): JSX.Element {
   const navigate = useNavigate();
@@ -9,32 +9,42 @@ export default function LandingLoginForm(): JSX.Element {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [usernameError, setUsernameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  useEffect(() => {
+    setUsernameError("");
+    setPasswordError("");
+  }, [username, password]);
+
+  function handleSubmit(e: React.FormEvent): void {
+    e.preventDefault();
+    // TODO: Login
+    if (username === "") {
+      setUsernameError("Username is required");
+    }
+    if (password === "") {
+      setPasswordError("Password is required");
+    }
+  }
+
   return (
-    <Box
-      component="form"
-      sx={{ p: 2 }}
-      onSubmit={(e: React.FormEvent): void => {
-        e.preventDefault();
-        // TODO: Login
-        console.log({
-          username,
-          password
-        });
-      }}
-    >
+    <Box component="form" sx={{ p: 2 }} onSubmit={handleSubmit}>
       <Typography variant="h5" align="center" sx={{ mb: 3, mt: 0, p: 0 }}>
-        Login
+        {"Login"}
       </Typography>
 
       <TextField
         size="small"
         variant="outlined"
         label="Username"
-        sx={{ mb: 2 }}
+        sx={{ mb: usernameError !== "" ? 1 : 4 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
-          setUsername(e.target.value);
+          setUsername(e.target.value.replace(/[^a-zA-Z\d]/, ""));
         }}
         value={username}
+        error={usernameError !== ""}
+        helperText={usernameError}
         fullWidth
         autoFocus
       />
@@ -43,11 +53,13 @@ export default function LandingLoginForm(): JSX.Element {
         variant="outlined"
         label="Password"
         type="password"
-        sx={{ mb: 4 }}
+        sx={{ mb: passwordError !== "" ? 2 : 5 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setPassword(e.target.value);
         }}
         value={password}
+        error={passwordError !== ""}
+        helperText={passwordError}
         fullWidth
       />
 
@@ -61,14 +73,14 @@ export default function LandingLoginForm(): JSX.Element {
       </Button>
 
       <Box textAlign="center" sx={{ pt: 3 }}>
-        <Typography variant="subtitle2">Don't have an account?</Typography>
+        <Typography variant="subtitle2">{"Don't have an account?"}</Typography>
         <Link
           sx={{ cursor: "pointer" }}
           variant="subtitle2"
           underline="hover"
           onClick={() => navigate("/signup")}
         >
-          Sign-up here
+          {"Sign-up here"}
         </Link>
       </Box>
     </Box>
