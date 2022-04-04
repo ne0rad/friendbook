@@ -14,7 +14,7 @@ export default function Router({ loggedIn }: Props): JSX.Element {
     <React.Suspense fallback={<LoadingPage />}>
       <Routes>
         {loggedIn ? (
-          <Route path="/" element={<MainRouter />} />
+          <Route path="/*" element={<MainRouter />} />
         ) : (
           <Route path="/*" element={<LandingRouter />} />
         )}
