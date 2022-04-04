@@ -111,7 +111,7 @@ export default function LandingSignupForm(): JSX.Element {
         variant="outlined"
         label="Confirm Password"
         type="password"
-        sx={{ mb: passwordConfirmError !== "" ? 1: 4 }}
+        sx={{ mb: passwordConfirmError !== "" ? 2: 5 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setPasswordConfirm(e.target.value);
         }}
