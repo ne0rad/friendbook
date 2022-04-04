@@ -1,4 +1,4 @@
-import { Box, Button, Link, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, Link, TextField, Typography } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -35,16 +35,25 @@ export default function LoginForm(): JSX.Element {
   }
 
   return (
-    <Box component="form" sx={{ p: 2 }} onSubmit={handleSubmit}>
+    <Box
+      component="form"
+      sx={{
+        p: 2,
+        height: "350px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
+      onSubmit={handleSubmit}
+    >
       <Typography variant="h5" align="center" sx={{ mb: 3, mt: 0, p: 0 }}>
         {"Login"}
       </Typography>
-
       <TextField
         size="small"
         variant="outlined"
         label="Username"
-        sx={{ mb: usernameError !== "" ? 1 : 4 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setUsername(e.target.value.replace(/[^a-zA-Z\d]/, ""));
         }}
@@ -59,7 +68,6 @@ export default function LoginForm(): JSX.Element {
         variant="outlined"
         label="Password"
         type="password"
-        sx={{ mb: passwordError !== "" ? 2 : 5 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setPassword(e.target.value);
         }}
@@ -68,7 +76,7 @@ export default function LoginForm(): JSX.Element {
         helperText={passwordError}
         fullWidth
       />
-
+      <Divider  />
       <Button
         variant="contained"
         type="submit"
@@ -78,7 +86,7 @@ export default function LoginForm(): JSX.Element {
         {"Login"}
       </Button>
 
-      <Box textAlign="center" sx={{ pt: 3 }}>
+      <Box textAlign="center">
         <Typography variant="subtitle2">{"Don't have an account?"}</Typography>
         <Link
           sx={{ cursor: "pointer" }}

@@ -1,4 +1,4 @@
-import { Box, Button, Link, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, Link, TextField, Typography } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -60,7 +60,14 @@ export default function SignupForm(): JSX.Element {
   return (
     <Box
       component="form"
-      sx={{ p: 2 }}
+      sx={{
+        p: 2,
+        height: "400px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }}
       onSubmit={(e: React.FormEvent): void => {
         e.preventDefault();
         // TODO: Signup
@@ -73,8 +80,8 @@ export default function SignupForm(): JSX.Element {
         }
       }}
     >
-      <Typography variant="h5" align="center" sx={{ mb: 3, mt: 0, p: 0 }}>
-        Sign-up
+      <Typography variant="h5" align="center">
+        {"Sign-up"}
       </Typography>
 
       <TextField
@@ -82,7 +89,6 @@ export default function SignupForm(): JSX.Element {
         variant="outlined"
         label="Username"
         type="text"
-        sx={{ mb: usernameError !== "" ? 1 : 4 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setUsername(e.target.value.replace(/[^a-zA-Z\d]/, ""));
         }}
@@ -97,7 +103,6 @@ export default function SignupForm(): JSX.Element {
         variant="outlined"
         label="Password"
         type="password"
-        sx={{ mb: passwordError !== "" ? 1 : 4 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setPassword(e.target.value);
         }}
@@ -111,7 +116,6 @@ export default function SignupForm(): JSX.Element {
         variant="outlined"
         label="Confirm Password"
         type="password"
-        sx={{ mb: passwordConfirmError !== "" ? 2: 5 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setPasswordConfirm(e.target.value);
         }}
@@ -120,7 +124,7 @@ export default function SignupForm(): JSX.Element {
         helperText={passwordConfirmError}
         fullWidth
       />
-
+      <Divider />
       <Button
         variant="contained"
         type="submit"
@@ -130,15 +134,15 @@ export default function SignupForm(): JSX.Element {
         {"Sign-up"}
       </Button>
 
-      <Box textAlign="center" sx={{ pt: 2 }}>
-        <Typography variant="subtitle2">Already have an account?</Typography>
+      <Box textAlign="center">
+        <Typography variant="subtitle2">{"Already have an account?"}</Typography>
         <Link
           sx={{ cursor: "pointer" }}
           variant="subtitle2"
           underline="hover"
           onClick={() => navigate("/login")}
         >
-          Login here
+          {"Login here"}
         </Link>
       </Box>
     </Box>

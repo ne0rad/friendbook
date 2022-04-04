@@ -1,13 +1,11 @@
-import { Button } from "@mui/material";
 import { Box } from "@mui/system";
-import { useNavigate } from "react-router-dom";
+import { GoBackButton } from ".";
 
 type Props = {
   children: React.ReactNode;
 };
 
 export default function FormBox({ children }: Props): JSX.Element {
-  const navigate = useNavigate();
   return (
     <Box
       sx={{
@@ -25,9 +23,7 @@ export default function FormBox({ children }: Props): JSX.Element {
       }}
     >
       {children}
-      <Button sx={{ mt: 0 }} fullWidth onClick={() => navigate("/")}>
-        Go Back
-      </Button>
+      <GoBackButton />
     </Box>
   );
 }
