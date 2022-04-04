@@ -49,6 +49,14 @@ export default function LandingSignupForm(): JSX.Element {
     }
   }, [password, passwordConfirm]);
 
+  function hasErrors(): boolean {
+    return (
+      usernameError !== "" ||
+      passwordError !== "" ||
+      passwordConfirmError !== ""
+    );
+  }
+
   return (
     <Box
       component="form"
@@ -56,11 +64,13 @@ export default function LandingSignupForm(): JSX.Element {
       onSubmit={(e: React.FormEvent): void => {
         e.preventDefault();
         // TODO: Signup
-        console.log({
-          username,
-          password,
-          passwordConfirm,
-        });
+        if (!hasErrors()) {
+          console.log({
+            username,
+            password,
+            passwordConfirm,
+          });
+        }
       }}
     >
       <Typography variant="h5" align="center" sx={{ mb: 3, mt: 0, p: 0 }}>
@@ -71,7 +81,8 @@ export default function LandingSignupForm(): JSX.Element {
         size="small"
         variant="outlined"
         label="Username"
-        sx={{ mb: 2 }}
+        type="text"
+        sx={{ mb: usernameError !== "" ? 1 : 4 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setUsername(e.target.value.replace(/[^a-zA-Z\d]/, ""));
         }}
@@ -86,7 +97,7 @@ export default function LandingSignupForm(): JSX.Element {
         variant="outlined"
         label="Password"
         type="password"
-        sx={{ mb: 2 }}
+        sx={{ mb: passwordError !== "" ? 1 : 4 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setPassword(e.target.value);
         }}
@@ -100,7 +111,7 @@ export default function LandingSignupForm(): JSX.Element {
         variant="outlined"
         label="Confirm Password"
         type="password"
-        sx={{ mb: 4 }}
+        sx={{ mb: passwordConfirmError !== "" ? 1: 4 }}
         onChange={(e: React.ChangeEvent<HTMLInputElement>): void => {
           setPasswordConfirm(e.target.value);
         }}
@@ -119,7 +130,7 @@ export default function LandingSignupForm(): JSX.Element {
         {"Sign-up"}
       </Button>
 
-      <Box textAlign="center" sx={{ pt: 3 }}>
+      <Box textAlign="center" sx={{ pt: 2 }}>
         <Typography variant="subtitle2">Already have an account?</Typography>
         <Link
           sx={{ cursor: "pointer" }}
