@@ -29,6 +29,7 @@ export default function App(): JSX.Element {
         .catch((err) => {
           setLoggedIn(false);
           setLoading(false);
+          localStorage.removeItem("token");
           navigate("/login");
         });
     },
