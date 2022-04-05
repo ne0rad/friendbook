@@ -15,19 +15,22 @@ export default function App(): JSX.Element {
   const tokenLogin = useCallback(
     async (token: string) => {
       setLoading(true);
-      const res = await axios.post(`/auth/token_login`, { token });
-
-      if (res.status === 200) {
-        setLoggedIn(true);
-        localStorage.setItem("token", res.data.token);
-        axios.defaults.headers.common["Authorization"] = token;
-      } else {
-        setLoggedIn(false);
-        localStorage.removeItem("token");
-      }
-
-      navigate("/");
-      setLoading(false);
+      axios
+        .post(`/auth/token_login`, { token })
+        .then((res) => {
+          if (res.status === 200) {
+            setLoggedIn(true);
+            setLoading(false);
+            localStorage.setItem("token", res.data.token);
+            axios.defaults.headers.common["Authorization"] = token;
+            navigate("/");
+          }
+        })
+        .catch((err) => {
+          setLoggedIn(false);
+          setLoading(false);
+          navigate("/login");
+        });
     },
     [navigate]
   );
@@ -58,11 +61,7 @@ export default function App(): JSX.Element {
     <AuthContext.Provider
       value={{ loggedIn, login: authContextLogin, logout: authContextLogout }}
     >
-      {!loading ? (
-        <Router loggedIn={loggedIn} />
-      ) : (
-        <LoadingPage />
-      )}
+      {!loading ? <Router loggedIn={loggedIn} /> : <LoadingPage />}
     </AuthContext.Provider>
   );
 }
