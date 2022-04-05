@@ -10,6 +10,8 @@ export default function SignupForm(): JSX.Element {
   const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
+  const [loading, setLoading] = useState(false);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirm, setPasswordConfirm] = useState("");
@@ -82,6 +84,7 @@ export default function SignupForm(): JSX.Element {
     axios
       .post("/auth/signup", { username, password })
       .then((res) => {
+        setLoading(false);
         if (res?.status === 200) {
           auth.login(res.data.token);
         } else {
@@ -89,6 +92,7 @@ export default function SignupForm(): JSX.Element {
         }
       })
       .catch((err) => {
+        setLoading(false);
         if (err?.response?.status === 401) {
           if (err.response.data?.loc === "username") {
             setUsernameError(err.response.data.msg);
@@ -100,6 +104,7 @@ export default function SignupForm(): JSX.Element {
   }
 
   function handleSubmit(e: React.FormEvent): void {
+    setLoading(true);
     e.preventDefault();
     if (!isEmpty() && !hasErrors()) {
       postSignup();
@@ -177,6 +182,7 @@ export default function SignupForm(): JSX.Element {
         type="submit"
         startIcon={<LoginIcon />}
         sx={{ mt: 2 }}
+        disabled={loading || hasErrors()}
         fullWidth
       >
         {"Sign-up"}
