@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkfriendbook=self.webpackChunkfriendbook||[]).push([[638],{8638:function(n,e,r){r.r(e),r.d(e,{default:function(){return c}});var u=r(9473),t=r(184);function c(){return(0,t.jsx)(u._I,{children:(0,t.jsx)(u.tP,{children:(0,t.jsx)(u.U0,{})})})}}}]);
+//# sourceMappingURL=638.c522c580.chunk.js.map
