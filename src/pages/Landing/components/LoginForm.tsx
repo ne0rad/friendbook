@@ -1,11 +1,16 @@
 import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { InputWrapper } from ".";
+import { AuthContext } from "../../../context";
+import axios from "axios";
 
 export default function LoginForm(): JSX.Element {
   const navigate = useNavigate();
+  const auth = useContext(AuthContext);
+
+  const [loading, setLoading] = useState(false);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -13,25 +18,55 @@ export default function LoginForm(): JSX.Element {
   const [usernameError, setUsernameError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  // Clear Errors on input change
   useEffect(() => {
     setUsernameError("");
     setPasswordError("");
   }, [username, password]);
 
-  function hasErrors() {
+  function hasErrors(): boolean {
     return usernameError !== "" || passwordError !== "";
+  }
+
+  function isEmpty(): boolean {
+    let empty: boolean = false;
+    if (username === "") {
+      setUsernameError("Username is required");
+      empty = true;
+    }
+    if (password === "") {
+      setPasswordError("Password is required");
+      empty = true;
+    }
+    return empty;
+  }
+
+  async function postLogin(): Promise<void> {
+    setLoading(true);
+    axios
+      .post("/auth/login", { username, password })
+      .then((res) => {
+        setLoading(false);
+        if (res?.status === 200) {
+          auth.login(res.data.token);
+        } else {
+          setPasswordError("Invalid username or password");
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        if (err?.response?.status === 401) {
+          setPasswordError("Invalid username or password");
+        } else {
+          setPasswordError("Some error occurred");
+        }
+      });
   }
 
   function handleSubmit(e: React.FormEvent): void {
     e.preventDefault();
-    // TODO: Login
-    if (!hasErrors()) {
-      if (username === "") {
-        setUsernameError("Username is required");
-      }
-      if (password === "") {
-        setPasswordError("Password is required");
-      }
+    if (!isEmpty() && !hasErrors()) {
+      postLogin();
     }
   }
 
@@ -89,6 +124,7 @@ export default function LoginForm(): JSX.Element {
         type="submit"
         sx={{ mt: 2 }}
         startIcon={<LoginIcon />}
+        disabled={loading || hasErrors()}
         fullWidth
       >
         {"Login"}

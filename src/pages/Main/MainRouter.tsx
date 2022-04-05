@@ -1,12 +1,17 @@
 import { Route, Routes } from "react-router-dom";
+import { Suspense, lazy } from "react";
 import NotFoundPage from "../NotFoundPage";
-import MainPage from "./MainPage";
+import LoadingPage from "../LoadingPage";
+
+const MainPage = lazy(() => import("./MainPage"));
 
 export default function MainRouter(): JSX.Element {
   return (
-    <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+    <Suspense fallback={<LoadingPage />}>
+      <Routes>
+        <Route path="/" element={<MainPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
   );
 }

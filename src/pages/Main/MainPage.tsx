@@ -1,5 +1,14 @@
-import { Typography } from "@mui/material";
+import { Button, Container, Typography } from "@mui/material";
+import { useContext } from "react";
+import { AuthContext } from "../../context";
 
 export default function MainPage(): JSX.Element {
-  return <Typography variant="h1">Under construction</Typography>;
+  const auth = useContext(AuthContext);
+
+  return (
+    <Container maxWidth="sm" sx={{textAlign: "center"}}>
+      <Typography variant="h4">Under construction</Typography>
+      <Button onClick={() => auth.logout()}>Logout</Button>
+    </Container>
+  );
 }

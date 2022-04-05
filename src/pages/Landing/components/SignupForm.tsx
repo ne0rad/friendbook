@@ -2,10 +2,13 @@ import { Box, Button, Link, TextField, Typography } from "@mui/material";
 import { InputWrapper } from ".";
 import LoginIcon from "@mui/icons-material/Login";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { AuthContext } from "../../../context";
 
 export default function SignupForm(): JSX.Element {
   const navigate = useNavigate();
+  const auth = useContext(AuthContext);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -58,6 +61,51 @@ export default function SignupForm(): JSX.Element {
     );
   }
 
+  function isEmpty(): boolean {
+    let empty: boolean = false;
+    if (username === "") {
+      setUsernameError("Username is required");
+      empty = true;
+    }
+    if (password === "") {
+      setPasswordError("Password is required");
+      empty = true;
+    }
+    if (passwordConfirm === "") {
+      setPasswordConfirmError("Password Confirm is required");
+      empty = true;
+    }
+    return empty;
+  }
+
+  async function postSignup(): Promise<void> {
+    axios
+      .post("/auth/signup", { username, password })
+      .then((res) => {
+        if (res?.status === 200) {
+          auth.login(res.data.token);
+        } else {
+          setUsernameError("Some error occurred");
+        }
+      })
+      .catch((err) => {
+        if (err?.response?.status === 401) {
+          if (err.response.data?.loc === "username") {
+            setUsernameError(err.response.data.msg);
+          }
+        } else {
+          setUsernameError("Some error occurred");
+        }
+      });
+  }
+
+  function handleSubmit(e: React.FormEvent): void {
+    e.preventDefault();
+    if (!isEmpty() && !hasErrors()) {
+      postSignup();
+    }
+  }
+
   return (
     <Box
       component="form"
@@ -69,17 +117,7 @@ export default function SignupForm(): JSX.Element {
         alignItems: "center",
         justifyContent: "space-between",
       }}
-      onSubmit={(e: React.FormEvent): void => {
-        e.preventDefault();
-        // TODO: Signup
-        if (!hasErrors()) {
-          console.log({
-            username,
-            password,
-            passwordConfirm,
-          });
-        }
-      }}
+      onSubmit={handleSubmit}
     >
       <Typography variant="h5" align="center">
         {"Sign-up"}
