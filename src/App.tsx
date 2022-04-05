@@ -40,8 +40,9 @@ export default function App(): JSX.Element {
     const token = localStorage.getItem("token");
     if (token) {
       tokenLogin(token);
+    } else {
+      setLoading(false);
     }
-    setLoading(false);
   }, [tokenLogin]);
 
   function authContextLogout(): void {
@@ -57,7 +58,11 @@ export default function App(): JSX.Element {
     <AuthContext.Provider
       value={{ loggedIn, login: authContextLogin, logout: authContextLogout }}
     >
-      {!loading ? <Router loggedIn={loggedIn} /> : <LoadingPage />}
+      {!loading ? (
+        <Router loggedIn={loggedIn} loading={loading} />
+      ) : (
+        <LoadingPage />
+      )}
     </AuthContext.Provider>
   );
 }
