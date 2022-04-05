@@ -59,7 +59,7 @@ export default function App(): JSX.Element {
       value={{ loggedIn, login: authContextLogin, logout: authContextLogout }}
     >
       {!loading ? (
-        <Router loggedIn={loggedIn} loading={loading} />
+        <Router loggedIn={loggedIn} />
       ) : (
         <LoadingPage />
       )}
