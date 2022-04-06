@@ -2,7 +2,11 @@
 
 Learning project. Making a fully featured social network using react and nodejs.
 
-## Backend URL
+## Live Preview URL
+
+https://ne0rad.github.io/friendbook/
+
+## NodeJS backend repository URL
 
 https://github.com/ne0rad/friendbook_api
 
