@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/friendbook/static/css/main.adece0a5.css",
-    "main.js": "/friendbook/static/js/main.e8845676.js",
+    "main.js": "/friendbook/static/js/main.e635d999.js",
     "static/js/999.146afc5d.chunk.js": "/friendbook/static/js/999.146afc5d.chunk.js",
     "static/js/638.c522c580.chunk.js": "/friendbook/static/js/638.c522c580.chunk.js",
     "static/js/865.6309965a.chunk.js": "/friendbook/static/js/865.6309965a.chunk.js",
     "static/js/636.9cdb8b45.chunk.js": "/friendbook/static/js/636.9cdb8b45.chunk.js",
     "index.html": "/friendbook/index.html",
     "main.adece0a5.css.map": "/friendbook/static/css/main.adece0a5.css.map",
-    "main.e8845676.js.map": "/friendbook/static/js/main.e8845676.js.map",
+    "main.e635d999.js.map": "/friendbook/static/js/main.e635d999.js.map",
     "999.146afc5d.chunk.js.map": "/friendbook/static/js/999.146afc5d.chunk.js.map",
     "638.c522c580.chunk.js.map": "/friendbook/static/js/638.c522c580.chunk.js.map",
     "865.6309965a.chunk.js.map": "/friendbook/static/js/865.6309965a.chunk.js.map",
@@ -16,6 +16,6 @@
   },
   "entrypoints": [
     "static/css/main.adece0a5.css",
-    "static/js/main.e8845676.js"
+    "static/js/main.e635d999.js"
   ]
 }
