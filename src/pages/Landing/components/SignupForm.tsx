@@ -81,6 +81,7 @@ export default function SignupForm(): JSX.Element {
   }
 
   async function postSignup(): Promise<void> {
+    setLoading(true);
     axios
       .post("/auth/signup", { username, password })
       .then((res) => {
@@ -104,7 +105,6 @@ export default function SignupForm(): JSX.Element {
   }
 
   function handleSubmit(e: React.FormEvent): void {
-    setLoading(true);
     e.preventDefault();
     if (!isEmpty() && !hasErrors()) {
       postSignup();
