@@ -97,6 +97,8 @@ export default function SignupForm(): JSX.Element {
         if (err?.response?.status === 401) {
           if (err.response.data?.loc === "username") {
             setUsernameError(err.response.data.msg);
+          } else if (err.response.data?.loc === "password") {
+            setPasswordError(err.response.data.msg);
           }
         } else {
           setUsernameError("Some error occurred");
