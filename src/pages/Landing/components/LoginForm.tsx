@@ -56,7 +56,11 @@ export default function LoginForm(): JSX.Element {
       .catch((err) => {
         setLoading(false);
         if (err?.response?.status === 401) {
-          setPasswordError("Invalid username or password");
+          if (err.response.data.loc === "username") {
+            setUsernameError(err.response.data.msg);
+          } else if (err.response.data.loc === "password") {
+            setPasswordError(err.response.data.msg);
+          }
         } else {
           setPasswordError("Some error occurred");
         }
