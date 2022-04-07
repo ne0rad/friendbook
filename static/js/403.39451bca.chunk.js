@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfriendbook=self.webpackChunkfriendbook||[]).push([[403],{4403:function(n,e,u){u.r(e),u.d(e,{default:function(){return f}});var r=u(2978),s=u(6417);function f(){return(0,s.jsxs)(r._I,{children:[(0,s.jsx)(r.eN,{}),(0,s.jsx)(r.Ju,{})]})}}}]);
