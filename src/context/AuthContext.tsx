@@ -2,6 +2,7 @@ import { createContext } from "react";
 
 type AuthContextType = {
   loggedIn: boolean;
+  loading: boolean;
   login: (token: string) => void;
   logout: () => void;
 };
