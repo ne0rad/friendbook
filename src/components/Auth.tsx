@@ -59,17 +59,15 @@ export default function Auth({ children }: Props) {
   }
 
   return (
-    <>
-      <AuthContext.Provider
-        value={{
-          loggedIn,
-          loading,
-          login: authContextLogin,
-          logout: authContextLogout,
-        }}
-      >
-        {children}
-      </AuthContext.Provider>
-    </>
+    <AuthContext.Provider
+      value={{
+        loggedIn,
+        loading,
+        login: authContextLogin,
+        logout: authContextLogout,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
   );
 }
