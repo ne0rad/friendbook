@@ -50,6 +50,7 @@ export default function Auth({ children }: Props) {
   function authContextLogout(): void {
     localStorage.removeItem("token");
     setLoggedIn(false);
+    navigate('/');
   }
 
   function authContextLogin(token: string): void {
