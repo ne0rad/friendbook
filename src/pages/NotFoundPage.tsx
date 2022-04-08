@@ -13,7 +13,7 @@ export default function NotFoundPage(): JSX.Element {
       <Typography variant="h2" align="center">
         Page not found
       </Typography>
-      <Button onClick={() => navigate(-1)} size="large" sx={{ mt: 2 }}>
+      <Button onClick={() => navigate('/')} size="large" sx={{ mt: 2 }}>
         Go Back
       </Button>
     </MainBox>
