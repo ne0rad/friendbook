@@ -80,7 +80,7 @@ export default function SignupForm(): JSX.Element {
     return empty;
   }
 
-  async function postSignup(): Promise<void> {
+  function postSignup(): void {
     setLoading(true);
     axios
       .post("/auth/signup", { username, password })
@@ -101,7 +101,7 @@ export default function SignupForm(): JSX.Element {
             setPasswordError(err.response.data.msg);
           }
         } else {
-          setUsernameError("Some error occurred");
+          setUsernameError("Connection error occurred");
         }
       });
   }

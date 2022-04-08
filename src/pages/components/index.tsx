@@ -1,4 +1,4 @@
 import Loading from "./Loading";
+import MainBox from "./MainBox";
 
-export { Loading };
-
+export { Loading, MainBox };

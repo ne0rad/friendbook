@@ -62,7 +62,7 @@ export default function LoginForm(): JSX.Element {
             setPasswordError(err.response.data.msg);
           }
         } else {
-          setPasswordError("Some error occurred");
+          setPasswordError("Connecion error occured");
         }
       });
   }

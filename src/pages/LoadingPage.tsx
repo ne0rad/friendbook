@@ -13,13 +13,11 @@ export default function LoadingPage(): JSX.Element {
           sm: "center",
           xs: "flex-start",
         },
-        height: "100vh",
-        width: "100vw",
+        width: "100%",
         minWidth: "260px",
-        minHeight: "500px",
         m: 0,
         py: {
-          sm: 0,
+          sm: 3,
           xs: 2,
         },
         px: {
