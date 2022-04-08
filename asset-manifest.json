@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/friendbook/static/css/main.9a687813.css",
-    "main.js": "/friendbook/static/js/main.e04e9365.js",
+    "main.js": "/friendbook/static/js/main.232e8395.js",
     "static/js/403.53cfe417.chunk.js": "/friendbook/static/js/403.53cfe417.chunk.js",
     "static/js/937.31ff1961.chunk.js": "/friendbook/static/js/937.31ff1961.chunk.js",
     "static/js/174.91e8d670.chunk.js": "/friendbook/static/js/174.91e8d670.chunk.js",
@@ -11,6 +11,6 @@
   },
   "entrypoints": [
     "static/css/main.9a687813.css",
-    "static/js/main.e04e9365.js"
+    "static/js/main.232e8395.js"
   ]
 }
