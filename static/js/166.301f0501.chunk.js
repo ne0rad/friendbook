@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfriendbook=self.webpackChunkfriendbook||[]).push([[166],{6166:function(n,e,r){r.r(e),r.d(e,{default:function(){return i}});var u=r(1113),t=r(6417);function i(){return(0,t.jsx)(u.Z,{variant:"h4",children:"Page is under construction"})}}}]);

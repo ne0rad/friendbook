@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkfriendbook=self.webpackChunkfriendbook||[]).push([[525],{3525:function(n,e,r){r.r(e),r.d(e,{default:function(){return t}});var u=r(1113),i=r(6417);function t(){return(0,i.jsx)(u.Z,{variant:"h4",children:"Profile Page is under construction"})}}}]);

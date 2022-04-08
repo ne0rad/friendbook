@@ -1,15 +1,16 @@
 {
   "files": {
     "main.css": "/friendbook/static/css/main.9a687813.css",
-    "main.js": "/friendbook/static/js/main.b197f80c.js",
-    "static/js/403.39451bca.chunk.js": "/friendbook/static/js/403.39451bca.chunk.js",
-    "static/js/937.ed5a27cb.chunk.js": "/friendbook/static/js/937.ed5a27cb.chunk.js",
-    "static/js/174.480611a3.chunk.js": "/friendbook/static/js/174.480611a3.chunk.js",
-    "static/js/942.bc9821ae.chunk.js": "/friendbook/static/js/942.bc9821ae.chunk.js",
+    "main.js": "/friendbook/static/js/main.e04e9365.js",
+    "static/js/403.53cfe417.chunk.js": "/friendbook/static/js/403.53cfe417.chunk.js",
+    "static/js/937.31ff1961.chunk.js": "/friendbook/static/js/937.31ff1961.chunk.js",
+    "static/js/174.91e8d670.chunk.js": "/friendbook/static/js/174.91e8d670.chunk.js",
+    "static/js/166.301f0501.chunk.js": "/friendbook/static/js/166.301f0501.chunk.js",
+    "static/js/525.cf87d5cd.chunk.js": "/friendbook/static/js/525.cf87d5cd.chunk.js",
     "index.html": "/friendbook/index.html"
   },
   "entrypoints": [
     "static/css/main.9a687813.css",
-    "static/js/main.b197f80c.js"
+    "static/js/main.e04e9365.js"
   ]
 }
