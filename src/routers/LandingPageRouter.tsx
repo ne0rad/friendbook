@@ -1,13 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import NotFoundPage from "../NotFoundPage";
-import LoadingPage from "../LoadingPage";
+import NotFoundPage from "../pages/NotFoundPage";
+import LoadingPage from "../pages/LoadingPage";
 
-const LandingPage = lazy(() => import("./LandingPage"));
-const LoginPage = lazy(() => import("./LoginPage"));
-const SignupPage = lazy(() => import("./SignupPage"));
+const LandingPage = lazy(() => import("../pages/Landing/LandingPage"));
+const LoginPage = lazy(() => import("../pages/Landing/LoginPage"));
+const SignupPage = lazy(() => import("../pages/Landing/SignupPage"));
 
-export default function LandingRouter(): JSX.Element {
+export default function LandingPageRouter(): JSX.Element {
   return (
     <Suspense fallback={<LoadingPage />}>
       <Routes>
