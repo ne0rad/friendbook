@@ -1,7 +1,7 @@
 import { Menu, MenuItem, IconButton, Divider } from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import MenuIcon from "@mui/icons-material/Menu";
 import { useContext, useState } from "react";
-import { AuthContext } from "../../../context";
+import { AuthContext } from "../../../../context";
 import { useNavigate } from "react-router-dom";
 
 export default function HeaderMenu(): JSX.Element {
@@ -21,13 +21,13 @@ export default function HeaderMenu(): JSX.Element {
     <>
       <IconButton
         size="large"
-        aria-label="account of current user"
+        aria-label="menu for current user"
         aria-controls="menu-appbar"
         aria-haspopup="true"
         onClick={handleMenu}
         color="inherit"
       >
-        <AccountCircle />
+        <MenuIcon />
       </IconButton>
       <Menu
         id="menu-appbar"
@@ -52,7 +52,7 @@ export default function HeaderMenu(): JSX.Element {
         >
           {"Profile"}
         </MenuItem>
-        <MenuItem onClick={handleClose}>My account</MenuItem>
+        <MenuItem onClick={handleClose}>{"Friends"}</MenuItem>
 
         <Divider />
         <MenuItem
